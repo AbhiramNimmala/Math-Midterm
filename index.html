@@ -1,0 +1,1275 @@
+<title>Math 135 Exam 2 Tutor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: persistent topic sidebar, one view at a time in the main pane. Rutgers scarlet as the single accent. */
+:root{
+  --bg:#FBFAF9; --surface:#FFFFFF; --surface-2:#F4F1EF; --surface-3:#EAE5E2;
+  --fg:#1A1716; --fg-dim:#5F5853; --fg-faint:#8B837E;
+  --rule:#E4DFDB; --rule-strong:#CFC8C3;
+  --accent:#C8102E; --accent-ink:#8E0A20; --accent-soft:#FBEEF0;
+  --ok:#1C6B47; --ok-soft:#E9F4EE; --ok-rule:#9CCDB3;
+  --no:#A33427; --no-soft:#FBEDEB; --no-rule:#E2A99F;
+  --warn:#8A5B00; --warn-soft:#FBF2E0;
+  --font-head:"Archivo",system-ui,sans-serif;
+  --font-body:"Source Serif 4",Georgia,serif;
+  --font-mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141211; --surface:#1C1A18; --surface-2:#252120; --surface-3:#302B29;
+  --fg:#F1ECE9; --fg-dim:#A79F9A; --fg-faint:#7E7772;
+  --rule:#332E2C; --rule-strong:#473F3C;
+  --accent:#FF6B82; --accent-ink:#FFA3B1; --accent-soft:#2B1A1E;
+  --ok:#6CC79A; --ok-soft:#152620; --ok-rule:#2E5744;
+  --no:#F08C7E; --no-soft:#2A1815; --no-rule:#5C322B;
+  --warn:#E0A94C; --warn-soft:#2A2114;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#141211; --surface:#1C1A18; --surface-2:#252120; --surface-3:#302B29;
+  --fg:#F1ECE9; --fg-dim:#A79F9A; --fg-faint:#7E7772;
+  --rule:#332E2C; --rule-strong:#473F3C;
+  --accent:#FF6B82; --accent-ink:#FFA3B1; --accent-soft:#2B1A1E;
+  --ok:#6CC79A; --ok-soft:#152620; --ok-rule:#2E5744;
+  --no:#F08C7E; --no-soft:#2A1815; --no-rule:#5C322B;
+  --warn:#E0A94C; --warn-soft:#2A2114;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.65;margin:0}
+h1,h2,h3,h4{font-family:var(--font-head);font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:clamp(23px,4vw,31px);line-height:1.12;letter-spacing:-.02em}
+h2{font-size:clamp(21px,3.4vw,27px);line-height:1.2;letter-spacing:-.01em}
+h3{font-size:17.5px;line-height:1.3}
+h4{font-size:14.5px;line-height:1.35}
+p{margin:0 0 .85em}
+ul,ol{margin:0 0 .85em;padding-left:1.25em}
+li{margin-bottom:.32em}
+code{font-family:var(--font-mono);font-size:.87em;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+button{font-family:var(--font-head);cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---------- header ---------- */
+header.top{border-bottom:1px solid var(--rule);background:var(--surface)}
+.top-in{max-width:1240px;margin:0 auto;padding:22px 24px 20px;display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;justify-content:space-between}
+.eyebrow{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+.hstat{display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+.hs{text-align:right}
+.hs .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-faint);display:block}
+.hs .v{font-family:var(--font-head);font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* ---------- app frame ---------- */
+.app{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:238px minmax(0,1fr);gap:0;align-items:start}
+@media(max-width:900px){.app{grid-template-columns:minmax(0,1fr)}}
+
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;padding:26px 16px 40px;border-right:1px solid var(--rule)}
+@media(max-width:900px){
+  .side{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;max-height:none;overflow:visible;border-right:0;border-bottom:1px solid var(--rule);background:var(--bg);padding:9px 12px}
+  .sgroup{display:none}
+  .slist{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
+  .nv{flex:0 0 auto;white-space:nowrap}
+  .nv .np{display:none}
+}
+.sgroup{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-faint);margin:18px 0 7px 10px}
+.sgroup:first-child{margin-top:0}
+.slist{display:flex;flex-direction:column;gap:1px}
+.nv{display:flex;align-items:center;gap:9px;text-align:left;width:100%;background:none;border:0;border-radius:8px;padding:8px 10px;font-family:var(--font-head);font-size:13.5px;font-weight:400;color:var(--fg-dim);line-height:1.3}
+.nv:hover{background:var(--surface-2);color:var(--fg)}
+.nv.cur{background:var(--accent-soft);color:var(--accent-ink);font-weight:500}
+.nv .nn{font-family:var(--font-mono);font-size:10.5px;color:var(--fg-faint);flex:0 0 14px}
+.nv.cur .nn{color:var(--accent)}
+.nv .nt{flex:1;min-width:0}
+.nv .np{font-family:var(--font-mono);font-size:10px;color:var(--fg-faint);flex:0 0 auto}
+.nv .np.done{color:var(--ok)}
+
+.pane{padding:34px 30px 90px;min-width:0}
+@media(max-width:900px){.pane{padding:26px 18px 90px}}
+.view{max-width:760px}
+
+/* ---------- view header ---------- */
+.vhead{margin-bottom:26px;padding-bottom:20px;border-bottom:1px solid var(--rule)}
+.vkicker{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.tag{font-family:var(--font-mono);font-size:10.5px;color:var(--fg-faint);border:1px solid var(--rule-strong);padding:2px 8px;border-radius:4px;white-space:nowrap}
+.lede{color:var(--fg-dim);margin:12px 0 0;font-size:17px}
+
+/* ---------- blocks ---------- */
+.block{margin-bottom:34px}
+.blabel{font-family:var(--font-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:11px;padding-bottom:7px;border-bottom:1px solid var(--rule)}
+.lesson{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:22px 24px}
+.lesson>h4{display:none}
+.lesson p:last-child{margin-bottom:0}
+.keybox{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:16px 20px;margin:16px 0;overflow-x:auto}
+.trapline{background:var(--warn-soft);border-radius:9px;padding:13px 17px;margin-top:16px;font-size:15.5px;color:var(--fg-dim)}
+.trapline b{color:var(--warn);font-family:var(--font-head);font-size:13.5px}
+
+.steps{list-style:none;padding:0;margin:12px 0;display:flex;flex-direction:column}
+.steps li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--rule);margin:0}
+.steps li:last-child{border-bottom:0}
+.steps .why{font-family:var(--font-mono);font-size:11px;color:var(--fg-faint);text-align:right;line-height:1.45;max-width:20ch}
+@media(max-width:620px){.steps li{grid-template-columns:minmax(0,1fr);gap:3px}.steps .why{text-align:left;max-width:none}}
+.steps .mj{overflow-x:auto;min-width:0}
+
+/* ---------- practice ---------- */
+.qcard{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:19px 22px;margin-bottom:16px}
+.qcard.right{border-color:var(--ok-rule);background:var(--ok-soft)}
+.qhead{display:flex;gap:11px;align-items:baseline;margin-bottom:11px}
+.qnum{font-family:var(--font-mono);font-size:11px;color:var(--accent);flex:0 0 auto;padding-top:2px}
+.qlvl{font-family:var(--font-mono);font-size:10px;color:var(--fg-faint);border:1px solid var(--rule-strong);border-radius:4px;padding:1px 7px;margin-left:auto;flex:0 0 auto;white-space:nowrap}
+.qtext{flex:1;min-width:0}.qtext p{margin:0}
+.ansrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.ansrow input{flex:1 1 220px;min-width:0;font-family:var(--font-mono);font-size:14px;padding:10px 13px;border:1px solid var(--rule-strong);border-radius:8px;background:var(--bg);color:var(--fg)}
+.btn{font-size:13px;font-weight:500;border-radius:8px;padding:9px 15px;border:1px solid var(--rule-strong);background:var(--surface-2);color:var(--fg)}
+.btn:hover{background:var(--surface-3)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent}
+.btn:disabled{opacity:.5;cursor:default}
+.verdict{margin-top:12px;padding:11px 15px;border-radius:8px;font-size:15px}
+.verdict.yes{background:var(--ok-soft);border:1px solid var(--ok-rule);color:var(--ok)}
+.verdict.no{background:var(--no-soft);border:1px solid var(--no-rule);color:var(--no)}
+.verdict b{font-family:var(--font-head)}
+.sol{margin-top:14px;padding-top:14px;border-top:1px dashed var(--rule);font-size:15.5px;color:var(--fg-dim)}
+.sol .final{color:var(--fg);font-weight:600}
+.diag{margin-top:12px;padding:13px 16px;border-radius:8px;background:var(--surface-2);font-size:15px;white-space:pre-wrap}
+.diag.wait{color:var(--fg-faint);font-style:italic}
+.preview{margin-top:9px;padding:9px 13px;background:var(--surface-2);border-radius:8px;font-size:15px;overflow-x:auto}
+.preview .plab{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-faint);margin-right:9px}
+
+/* ---------- formula sheet ---------- */
+.fgroup{margin-bottom:30px}
+.fgroup h3{margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.frow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;border:1px solid var(--rule);border-radius:11px;margin-bottom:11px;overflow:hidden;background:var(--surface)}
+@media(max-width:700px){.frow{grid-template-columns:minmax(0,1fr)}}
+.fmain{padding:15px 18px;min-width:0}
+.fex{padding:15px 18px;min-width:0;background:var(--surface-2);border-left:1px solid var(--rule)}
+@media(max-width:700px){.fex{border-left:0;border-top:1px solid var(--rule)}}
+.fn{font-family:var(--font-head);font-size:13.5px;font-weight:500;margin-bottom:7px}
+.fx{overflow-x:auto;font-size:16px}
+.fexl{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-faint);margin-bottom:6px}
+.fex .fx{font-size:15px}
+.fnote{font-size:14px;color:var(--fg-dim);margin-top:7px}
+
+/* ---------- misc ---------- */
+.tbl-scroll{overflow-x:auto;margin:16px 0;border:1px solid var(--rule);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:460px}
+th,td{text-align:left;padding:11px 15px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--font-head);font-size:12.5px;font-weight:600;background:var(--surface-2);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:15.5px;line-height:1.5;margin-bottom:11px;cursor:pointer}
+.chk input{margin:5px 0 0;accent-color:var(--accent);flex:0 0 auto;width:15px;height:15px}
+.chk input:checked+span{color:var(--fg-faint);text-decoration:line-through}
+.callout{border-left:3px solid var(--accent);padding:3px 0 3px 17px;margin:20px 0;color:var(--fg-dim)}
+.callout strong{color:var(--fg)}
+.vnav{display:flex;gap:10px;justify-content:space-between;margin-top:40px;padding-top:22px;border-top:1px solid var(--rule)}
+.meter{height:6px;background:var(--surface-3);border-radius:4px;overflow:hidden;width:100%;margin-top:7px}
+.meter i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+
+/* ---------- math keyboard ---------- */
+#mathpad{position:fixed;left:0;right:0;bottom:0;z-index:55;background:var(--surface);border-top:1px solid var(--rule-strong);box-shadow:0 -2px 20px rgba(0,0,0,.14);padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px))}
+.padrow{display:flex;gap:5px;flex-wrap:wrap;max-width:900px;margin:0 auto}
+.padrow+.padrow{margin-top:5px}
+.k{font-family:var(--font-mono);font-size:13.5px;line-height:1;padding:9px 11px;min-width:36px;border:1px solid var(--rule);border-radius:7px;background:var(--surface-2);color:var(--fg)}
+.k:hover{background:var(--surface-3)}
+.k.wide{min-width:52px}
+.padtop{display:flex;align-items:center;gap:8px;max-width:900px;margin:0 auto 7px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-faint)}
+.padtop span{flex:1}
+
+/* ---------- docks ---------- */
+#askdock{position:fixed;right:16px;bottom:16px;z-index:50}
+#askdock .fab{border-radius:999px;padding:12px 20px;font-size:14px;font-weight:500;background:var(--accent);color:#fff;border:0;box-shadow:0 2px 14px rgba(0,0,0,.22)}
+#askpanel{position:fixed;right:0;bottom:0;z-index:60;width:min(440px,100vw);max-height:min(640px,86vh);display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--rule-strong);border-radius:14px 14px 0 0;box-shadow:0 -2px 28px rgba(0,0,0,.2)}
+@media(max-width:520px){#askpanel{width:100vw;border-radius:0}}
+.ask-top{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--rule)}
+.ask-top h4{flex:1}
+.ask-log{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px;min-height:120px}
+.bub{font-size:15px;line-height:1.55;border-radius:10px;padding:9px 13px;max-width:92%;overflow-x:auto}
+.bub.me{align-self:flex-end;background:var(--accent-soft);color:var(--fg)}
+.bub.cl{align-self:flex-start;background:var(--surface-2);color:var(--fg)}
+.bub.cl.wait{color:var(--fg-faint);font-style:italic}
+.ask-bot{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--rule)}
+.ask-bot textarea{flex:1;min-width:0;resize:none;font-family:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--rule-strong);border-radius:9px;background:var(--bg);color:var(--fg);max-height:110px}
+.ask-hint{padding:0 16px 10px;font-size:11.5px;color:var(--fg-faint);font-family:var(--font-mono)}
+
+/* ---------- grapher ---------- */
+#graphpanel{position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:60;width:min(680px,100vw);max-height:92vh;overflow-y:auto;background:var(--surface);border:1px solid var(--rule-strong);border-radius:14px 14px 0 0;box-shadow:0 -2px 28px rgba(0,0,0,.2)}
+.gtop{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--surface);z-index:2}
+.gtop h4{flex:1}
+.gbody{padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.grow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.grow label{font-family:var(--font-mono);font-size:11px;color:var(--fg-faint)}
+.grow input[type=text]{flex:1 1 200px;min-width:0;font-family:var(--font-mono);font-size:14px;padding:9px 12px;border:1px solid var(--rule-strong);border-radius:8px;background:var(--bg);color:var(--fg)}
+.grow input[type=number]{width:76px;font-family:var(--font-mono);font-size:13px;padding:7px 9px;border:1px solid var(--rule-strong);border-radius:7px;background:var(--bg);color:var(--fg)}
+.toggles{display:flex;gap:6px;flex-wrap:wrap}
+.tg{font-family:var(--font-mono);font-size:11.5px;padding:7px 11px;border-radius:7px;border:1px solid var(--rule-strong);background:var(--surface-2);color:var(--fg-dim)}
+.tg.on{color:#fff;border-color:transparent}
+.tg.on[data-fn="f"]{background:#2a78d6}.tg.on[data-fn="d1"]{background:#eb6834}.tg.on[data-fn="d2"]{background:#1baf7a}
+.canvwrap{position:relative;width:100%;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--bg)}
+#plot{display:block;width:100%;height:320px}
+.gerr{font-size:13.5px;color:var(--no);margin-top:8px;min-height:1em}
+.ghint{font-size:13px;color:var(--fg-faint);margin-top:10px}
+.glegend{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--font-mono);font-size:11.5px;color:var(--fg-dim);margin-top:9px}
+.glegend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.gpre{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.gp{font-family:var(--font-mono);font-size:11px;padding:6px 10px;border-radius:6px;border:1px solid var(--rule);background:var(--surface-2);color:var(--fg-dim)}
+.gp:hover{background:var(--surface-3);color:var(--fg)}
+
+mjx-container{min-width:0}
+mjx-container[display="true"]{margin:.55em 0!important}
+.hidden{display:none!important}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div>
+      <div class="eyebrow">Math 135 &middot; Calc I for the Life &amp; Social Sciences</div>
+      <h1>Exam 2 Tutor</h1>
+    </div>
+    <div class="hstat">
+      <div class="hs"><span class="k">Exam</span><span class="v">Tue Oct 13, 9:30 PM</span></div>
+      <div class="hs"><span class="k">Solved</span><span class="v" id="scorenum">0 / 40</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="app">
+  <aside class="side">
+    <div class="sgroup">Reference</div>
+    <div class="slist" id="nav-ref"></div>
+    <div class="sgroup">Topics</div>
+    <div class="slist" id="nav-topics"></div>
+    <div class="sgroup">Finish</div>
+    <div class="slist" id="nav-end"></div>
+    <div class="sgroup" id="whogroup">Progress</div>
+    <div style="padding:0 10px">
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--fg-faint)" id="who">Saved on this device</div>
+      <div class="meter"><i id="meterfill"></i></div>
+      <button class="btn ghost" id="resetbtn" style="margin-top:12px;font-size:12px;padding:6px 11px">Reset progress</button>
+    </div>
+  </aside>
+  <main class="pane" id="pane"></main>
+</div>
+
+<div id="mathpad" class="hidden">
+  <div class="padtop"><span id="padfor">Math keyboard</span><button class="btn ghost" id="padhide" style="padding:4px 10px;font-size:12px">Hide</button></div>
+  <div class="padrow" id="padr1"></div>
+  <div class="padrow" id="padr2"></div>
+</div>
+
+<div id="askdock">
+  <button class="fab" id="graphopen" style="background:var(--surface);color:var(--fg);border:1px solid var(--rule-strong);margin-right:8px">Graph</button>
+  <button class="fab" id="askopen">Ask a question</button>
+</div>
+
+<div id="askpanel" class="hidden">
+  <div class="ask-top"><h4>Ask about any topic</h4><button class="btn ghost" id="askclose">Close</button></div>
+  <div class="ask-log" id="asklog"></div>
+  <div class="ask-bot">
+    <textarea id="askbox" rows="1" placeholder="e.g. why is x=0 not a critical number there?"></textarea>
+    <button class="btn primary" id="asksend">Send</button>
+  </div>
+  <div class="ask-hint" id="askhint">Answers come from Claude on your own account.</div>
+</div>
+
+<div id="graphpanel" class="hidden">
+  <div class="gtop"><h4>Function grapher</h4><button class="btn ghost" id="graphclose">Close</button></div>
+  <div class="gbody">
+    <div class="gpre" id="gpre"></div>
+    <div class="grow">
+      <label for="gfn">f(x) =</label>
+      <input type="text" id="gfn" value="x^6*e^(-4x)" autocomplete="off" spellcheck="false">
+      <button class="btn primary" id="gplot">Plot</button>
+    </div>
+    <div class="grow">
+      <div class="toggles">
+        <button class="tg on" data-fn="f">f</button>
+        <button class="tg" data-fn="d1">f&prime;</button>
+        <button class="tg" data-fn="d2">f&Prime;</button>
+      </div>
+      <label for="gxmin" style="margin-left:auto">x from</label>
+      <input type="number" id="gxmin" value="-2" step="any">
+      <label for="gxmax">to</label>
+      <input type="number" id="gxmax" value="4" step="any">
+    </div>
+    <div class="canvwrap"><canvas id="plot"></canvas></div>
+    <div class="glegend">
+      <span><i style="background:#2a78d6"></i>f</span>
+      <span><i style="background:#eb6834"></i>f&prime;</span>
+      <span><i style="background:#1baf7a"></i>f&Prime;</span>
+    </div>
+    <div class="gerr" id="gerr"></div>
+    <p class="ghint">Turn on f&prime; to see what the Lecture 10 problems test: wherever the orange curve crosses zero, the blue one turns around. Powers use <code>^</code>, multiplication <code>*</code>; also <code>sqrt( ) cbrt( ) ln( ) sin( ) cos( ) tan( ) sec( ) abs( ) e pi</code>.</p>
+  </div>
+</div>
+
+<script>
+window.MathJax={
+  tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true},
+  options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']},
+  svg:{fontCache:'local'}
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" id="MathJax-script" async></script>
+<script>
+var TOPICS=[
+{id:"t1",n:"1",name:"Definition of the derivative",sec:"§3.3–3.4",ex:"22–31",
+ lede:"A derivative is the slope of a tangent line, built as a limit of secant slopes. Everything here is that one idea read in different directions.",
+ lesson:'<h4>What to know</h4><p>Two equivalent forms. Use whichever matches the limit in front of you.</p><div class="keybox">$$f\'(a)=\\lim_{h\\to0}\\frac{f(a+h)-f(a)}{h}\\qquad f\'(a)=\\lim_{x\\to a}\\frac{f(x)-f(a)}{x-a}$$</div><p><b>Average</b> rate of change on $[a,b]$ is $\\frac{f(b)-f(a)}{b-a}$ — the slope of a secant. <b>Instantaneous</b> rate at $a$ is $f\'(a)$ — the slope of the tangent.</p><p>A tangent line needs two ingredients: the point $(a,f(a))$ from the original function, and the slope $f\'(a)$ from the derivative.</p><div class="trapline"><b>Trap.</b> "Write the limit" means write it, not evaluate it. And your answer may not contain the symbol $f$ — substitute the formula in.</div>',
+ qs:[
+  {lvl:"warm-up",q:'Write the limit definition of $g\'(-3)$.',accept:["lim_{h->0}(g(-3+h)-g(-3))/h","(g(-3+h)-g(-3))/h"],ans:'$\\displaystyle g\'(-3)=\\lim_{h\\to0}\\frac{g(-3+h)-g(-3)}{h}$',
+   sol:'<p>Take the template $f\'(a)=\\lim\\limits_{h\\to0}\\frac{f(a+h)-f(a)}{h}$ and substitute $f=g$, $a=-3$. Nothing else changes.</p><p class="final">$g\'(-3)=\\lim\\limits_{h\\to0}\\dfrac{g(-3+h)-g(-3)}{h}$</p><p>The other form, $\\lim\\limits_{x\\to-3}\\frac{g(x)-g(-3)}{x+3}$, is equally correct.</p>'},
+  {lvl:"standard",q:'Let $f(x)=\\sqrt{2x+5}$. Use the <em>limit definition</em> to find $f\'(2)$.',accept:["1/3",".333","0.333"],ans:'$f\'(2)=\\tfrac13$',
+   sol:'<ol class="steps"><li><div class="mj">$$f(2)=\\sqrt9=3$$</div><div class="why">the base value</div></li><li><div class="mj">$$\\lim_{x\\to2}\\frac{\\sqrt{2x+5}-3}{x-2}$$</div><div class="why">second form of the definition</div></li><li><div class="mj">$$\\cdot\\frac{\\sqrt{2x+5}+3}{\\sqrt{2x+5}+3}=\\frac{2x+5-9}{(x-2)\\left(\\sqrt{2x+5}+3\\right)}$$</div><div class="why">conjugate</div></li><li><div class="mj">$$=\\frac{2(x-2)}{(x-2)\\left(\\sqrt{2x+5}+3\\right)}=\\frac{2}{\\sqrt{2x+5}+3}$$</div><div class="why">factor and cancel</div></li><li><div class="mj">$$\\to\\frac{2}{3+3}=\\frac13$$</div><div class="why">substitute</div></li></ol><p class="final">$f\'(2)=\\tfrac13$</p>'},
+  {lvl:"exam-level",q:'Find a function $f$ and a number $a$ so that $\\displaystyle\\lim_{h\\to0}\\frac{10\\sin(\\pi+h)-0}{h}$ equals $f\'(a)$. Then evaluate it.',accept:["f(x)=10sin(x),a=pi,-10","10sinx,pi,-10","-10"],ans:'$f(x)=10\\sin x$, $a=\\pi$, and the limit is $-10$',
+   sol:'<ol class="steps"><li><div class="mj">$$a+h=\\pi+h\\ \\Rightarrow\\ a=\\pi$$</div><div class="why">read $a$ off the inside</div></li><li><div class="mj">$$f(a+h)=10\\sin(\\pi+h)\\ \\Rightarrow\\ f(x)=10\\sin x$$</div><div class="why">strip the $h$</div></li><li><div class="mj">$$f(\\pi)=10\\sin\\pi=0\\ \\checkmark$$</div><div class="why">the lone $0$ confirms it</div></li><li><div class="mj">$$f\'(x)=10\\cos x\\ \\Rightarrow\\ f\'(\\pi)=-10$$</div><div class="why">evaluate</div></li></ol><p class="final">$f(x)=10\\sin x$, $a=\\pi$, limit $=-10$.</p><p>Not unique — adding any constant to $f$ works, since the constant cancels in the subtraction.</p>'},
+  {lvl:"word problem",q:'The water in a tank $t$ minutes after filling begins is $W(t)=2t^2+5t+10$ gallons. Find the average rate of change of $W$ from $t=2$ to $t=5$, with units.',accept:["19","19 gal/min","19 gallons per minute"],ans:'$19$ gallons per minute',
+   sol:'<ol class="steps"><li><div class="mj">$$W(5)=50+25+10=85$$</div><div class="why">endpoint value</div></li><li><div class="mj">$$W(2)=8+10+10=28$$</div><div class="why">start value</div></li><li><div class="mj">$$\\frac{85-28}{5-2}=\\frac{57}{3}=19$$</div><div class="why">secant slope</div></li></ol><p class="final">$19$ gallons per minute.</p><p>Units are always (output units) per (input units). This is an <em>average</em> rate — the slope of a secant, not a tangent.</p>'}]},
+
+{id:"t2",n:"2",name:"Limits of indeterminate form",sec:"§3.1",ex:"32–41",
+ lede:"Substitute first. If you get 0/0, that isn't an answer — it means this way of writing the expression can't tell you the limit yet.",
+ lesson:'<h4>What to know</h4><p>Getting $\\tfrac00$ means a common factor is hiding. Do algebra until it cancels, then substitute again.</p><p><b>Polynomials</b> → factor and cancel. <b>Fractions inside the fraction</b> → common denominator on top, then flip and multiply. <b>A square root</b> → multiply by the conjugate.</p><div class="keybox">$$\\frac{0}{0}\\ \\text{is indeterminate}\\qquad\\frac{\\text{nonzero}}{0}\\ \\text{is infinite}$$</div><p>Nonzero over zero is <em>not</em> indeterminate — check the sign of the denominator on the side you approach from to pick $+\\infty$ or $-\\infty$. If the two sides disagree, the answer is DNE.</p><div class="trapline"><b>Why cancelling is legal.</b> In a limit, $x$ approaches the target but never equals it, so the factor you cancel is never actually zero. Say this if asked to justify.</div>',
+ qs:[
+  {lvl:"warm-up",q:'$\\displaystyle\\lim_{x\\to6}\\frac{(x-5)^2-1}{x^2-7x+6}$',accept:["2/5",".4","0.4"],ans:'$\\tfrac25$',
+   sol:'<ol class="steps"><li><div class="mj">$$(x-5)^2-1=x^2-10x+24=(x-4)(x-6)$$</div><div class="why">expand, then factor the top</div></li><li><div class="mj">$$x^2-7x+6=(x-6)(x-1)$$</div><div class="why">factor the bottom</div></li><li><div class="mj">$$\\frac{(x-4)(x-6)}{(x-6)(x-1)}=\\frac{x-4}{x-1}$$</div><div class="why">cancel $x-6$</div></li><li><div class="mj">$$\\to\\frac{2}{5}$$</div><div class="why">substitute $x=6$</div></li></ol><p class="final">$\\tfrac25$</p>'},
+  {lvl:"standard",q:'$\\displaystyle\\lim_{t\\to0^-}\\left(\\frac{7}{t}-\\frac{35}{t^2+5t}\\right)$',accept:["7/5","1.4"],ans:'$\\tfrac75$',
+   sol:'<ol class="steps"><li><div class="mj">$$t^2+5t=t(t+5)$$</div><div class="why">factor the second denominator</div></li><li><div class="mj">$$\\frac{7(t+5)-35}{t(t+5)}$$</div><div class="why">common denominator</div></li><li><div class="mj">$$=\\frac{7t+35-35}{t(t+5)}=\\frac{7t}{t(t+5)}$$</div><div class="why">the constants cancel</div></li><li><div class="mj">$$=\\frac{7}{t+5}\\to\\frac{7}{5}$$</div><div class="why">cancel $t$, substitute</div></li></ol><p class="final">$\\tfrac75$</p><p>The one-sided marker $t\\to0^-$ turns out not to matter here, because the simplified form is continuous at $0$. Check that before ignoring it.</p>'},
+  {lvl:"exam-level",q:'$\\displaystyle\\lim_{w\\to3}\\frac{3w^2-3w-18}{9w-w^3}$',accept:["-5/6","-0.833","-.833"],ans:'$-\\tfrac56$',
+   sol:'<ol class="steps"><li><div class="mj">$$3w^2-3w-18=3(w-3)(w+2)$$</div><div class="why">factor out 3 first</div></li><li><div class="mj">$$9w-w^3=w(9-w^2)=-w(w-3)(w+3)$$</div><div class="why">watch the sign flip</div></li><li><div class="mj">$$\\frac{3(w-3)(w+2)}{-w(w-3)(w+3)}=\\frac{3(w+2)}{-w(w+3)}$$</div><div class="why">cancel $w-3$</div></li><li><div class="mj">$$\\to\\frac{3(5)}{-3(6)}=-\\frac{5}{6}$$</div><div class="why">substitute $w=3$</div></li></ol><p class="final">$-\\tfrac56$</p><p>The sign flip in step 2 is where most people lose this one: $9-w^2=-(w^2-9)=-(w-3)(w+3)$.</p>'},
+  {lvl:"word problem",q:'A medication absorbed into the bloodstream is $A(t)=\\dfrac{12t}{t^2+2}$ mg, $t$ hours after it is given. Find the instantaneous rate of change of $A$ at $t=2$, with units.',accept:["-2/3","-0.667","-.667","-2/3 mg per hour"],ans:'$-\\tfrac23$ mg per hour',
+   sol:'<ol class="steps"><li><div class="mj">$$A\'(t)=\\frac{12(t^2+2)-12t(2t)}{(t^2+2)^2}$$</div><div class="why">quotient rule</div></li><li><div class="mj">$$=\\frac{12t^2+24-24t^2}{(t^2+2)^2}=\\frac{24-12t^2}{(t^2+2)^2}$$</div><div class="why">simplify the top</div></li><li><div class="mj">$$A\'(2)=\\frac{24-48}{36}=-\\frac{24}{36}=-\\frac23$$</div><div class="why">substitute</div></li></ol><p class="final">$-\\tfrac23$ mg per hour.</p><p><b>In context:</b> two hours in, the amount in the bloodstream is <em>falling</em> at about $0.67$ mg each hour — the body is clearing it faster than it is being absorbed.</p>'}]},
+
+{id:"t3",n:"3",name:"Derivative rules",sec:"§4.1–4.2",ex:"42–50",
+ lede:"Pure recall. If any line of the rule table takes more than a second on exam night, that is the highest-value thing you can fix.",
+ lesson:'<h4>What to know</h4><div class="keybox">$$x^n\\to nx^{n-1}\\quad e^x\\to e^x\\quad \\ln x\\to\\tfrac1x$$$$\\sin\\to\\cos\\quad\\cos\\to-\\sin\\quad\\tan\\to\\sec^2\\quad\\sec\\to\\sec\\tan$$</div><p>Rewrite roots and reciprocals as powers before differentiating: $\\sqrt x=x^{1/2}$, $\\tfrac1x=x^{-1}$, $\\tfrac{23}{x^2}=23x^{-2}$.</p><div class="keybox">$$(uv)\'=u\'v+uv\'\\qquad\\left(\\frac uv\\right)\'=\\frac{u\'v-uv\'}{v^2}$$</div><p>The product rule is symmetric. The quotient rule is <b>not</b> — $u\'v$ comes first, then minus.</p><div class="trapline"><b>Trap.</b> Check whether you need the quotient rule at all. A single-term denominator splits: $\\frac{30-x}{\\sqrt{5x}}$ becomes two powers of $x$ and needs no quotient rule.</div>',
+ qs:[
+  {lvl:"warm-up",q:'$\\dfrac{d}{dx}\\left(10x^3+\\sec x-\\dfrac{23}{x^2}\\right)$',accept:["30x^2+secxtanx+46/x^3","30x^2+sec(x)tan(x)+46x^-3","30x^2+secxtanx+46x^(-3)"],ans:'$30x^2+\\sec x\\tan x+\\dfrac{46}{x^3}$',
+   sol:'<ol class="steps"><li><div class="mj">$$10x^3\\to30x^2$$</div><div class="why">power rule</div></li><li><div class="mj">$$\\sec x\\to\\sec x\\tan x$$</div><div class="why">from the table</div></li><li><div class="mj">$$-\\frac{23}{x^2}=-23x^{-2}\\to+46x^{-3}$$</div><div class="why">$(-23)(-2)=+46$</div></li></ol><p class="final">$30x^2+\\sec x\\tan x+\\dfrac{46}{x^3}$</p><p>The sign on the last term flips to positive — two negatives multiplied. That is the usual slip here.</p>'},
+  {lvl:"standard",q:'$\\dfrac{d}{dx}\\left(x^4\\ln x-x^4\\right)$, simplified.',accept:["4x^3lnx-3x^3","4x^3ln(x)-3x^3"],ans:'$4x^3\\ln x-3x^3$',
+   sol:'<ol class="steps"><li><div class="mj">$$u=x^4\\to u\'=4x^3,\\quad v=\\ln x\\to v\'=\\tfrac1x$$</div><div class="why">product rule on the first term</div></li><li><div class="mj">$$4x^3\\ln x+x^4\\cdot\\tfrac1x=4x^3\\ln x+x^3$$</div><div class="why">$x^4\\cdot x^{-1}=x^3$</div></li><li><div class="mj">$$-x^4\\to-4x^3$$</div><div class="why">second term</div></li><li><div class="mj">$$4x^3\\ln x+x^3-4x^3=4x^3\\ln x-3x^3$$</div><div class="why">combine like terms</div></li></ol><p class="final">$4x^3\\ln x-3x^3$</p>'},
+  {lvl:"exam-level",q:'Let $f(x)=\\left(x^2+4x\\right)e^x$. Find $f\'\'(1)$.',accept:["19e","19*e","19e^1"],ans:'$19e$',
+   sol:'<ol class="steps"><li><div class="mj">$$f\'=(2x+4)e^x+(x^2+4x)e^x$$</div><div class="why">product rule</div></li><li><div class="mj">$$f\'=(x^2+6x+4)e^x$$</div><div class="why">combine — makes the next step easier</div></li><li><div class="mj">$$f\'\'=(2x+6)e^x+(x^2+6x+4)e^x$$</div><div class="why">product rule again</div></li><li><div class="mj">$$f\'\'=(x^2+8x+10)e^x$$</div><div class="why">combine</div></li><li><div class="mj">$$f\'\'(1)=(1+8+10)e=19e$$</div><div class="why">substitute</div></li></ol><p class="final">$19e$</p><p>Combining at step 2 is what keeps the second differentiation short. Leave the answer as $19e$ — no decimals.</p>'},
+  {lvl:"word problem",q:'Bacterial growth rate as a function of salt concentration $c$ is $G(c)=24\\ln c-5c+20$ for $1\\le c\\le10$ (thousands of bacteria per hour, $c$ in mg/L). At what salt concentration does $G$ have a horizontal tangent line?',accept:["4.8","c=4.8","24/5"],ans:'$c=4.8$ mg/L',
+   sol:'<ol class="steps"><li><div class="mj">$$G\'(c)=\\frac{24}{c}-5$$</div><div class="why">$(\\ln c)\'=1/c$</div></li><li><div class="mj">$$\\frac{24}{c}-5=0\\ \\Rightarrow\\ \\frac{24}{c}=5$$</div><div class="why">horizontal means slope 0</div></li><li><div class="mj">$$24=5c\\ \\Rightarrow\\ c=4.8$$</div><div class="why">inside $[1,10]$ ✓</div></li></ol><p class="final">$c=4.8$ mg/L.</p><p><b>In context:</b> $G\'>0$ below $4.8$ and $G\'<0$ above it, so $4.8$ mg/L is the salt concentration that produces the <em>fastest</em> bacterial growth. More salt past that point slows growth down.</p><p>Units of $G\'$: thousands of bacteria per hour, per mg/L.</p>'}]},
+
+{id:"t4",n:"4",name:"The chain rule",sec:"§4.3",ex:"51–58",
+ lede:"Before differentiating anything, ask one question: what is the outermost operation? That alone decides which rule you open with.",
+ lesson:'<h4>What to know</h4><div class="keybox">$$\\frac{d}{dx}\\Big[f\\big(g(x)\\big)\\Big]=f\'\\big(g(x)\\big)\\cdot g\'(x)\\qquad\\frac{dy}{dx}=\\frac{dy}{du}\\cdot\\frac{du}{dx}$$</div><p>Derivative of the outside, <b>inside left alone</b>, times the derivative of the inside. The parenthesis closes after $g(x)$ — it is $f\'(g(x))\\cdot g\'(x)$, never $f\'(g(x)\\cdot g\'(x))$.</p><p>Opening move by what you see: a function wrapping everything → chain rule. Division → quotient rule. Multiplication → product rule. Whichever you open with hands you pieces, and some of <em>those</em> need the chain rule. Peel from outside inward.</p><div class="trapline"><b>Trap.</b> $\\sin^5(x)$ means $(\\sin x)^5$ — outside is the fifth power, inside is $\\sin x$. And $e^{-5x}$ differentiates to $-5e^{-5x}$, not $-5xe^{-5x}$.</div>',
+ qs:[
+  {lvl:"warm-up",q:'$\\dfrac{d}{dx}\\left(\\sin^5 x\\right)$',accept:["5sin^4(x)cos(x)","5sin^4xcosx","5(sinx)^4cosx"],ans:'$5\\sin^4(x)\\cos(x)$',
+   sol:'<ol class="steps"><li><div class="mj">$$\\sin^5x=(\\sin x)^5$$</div><div class="why">outside = 5th power, inside = $\\sin x$</div></li><li><div class="mj">$$5(\\sin x)^4\\cdot\\frac{d}{dx}[\\sin x]$$</div><div class="why">power rule outside, inside untouched</div></li><li><div class="mj">$$=5\\sin^4(x)\\cos(x)$$</div><div class="why">times the inside derivative</div></li></ol><p class="final">$5\\sin^4(x)\\cos(x)$</p>'},
+  {lvl:"standard",q:'$\\dfrac{d}{dx}\\left(\\tan^2\\!\\left(2x^4\\right)\\right)$. Do not simplify.',accept:["16x^3tan(2x^4)sec^2(2x^4)","2tan(2x^4)sec^2(2x^4)(8x^3)"],ans:'$16x^3\\tan\\!\\left(2x^4\\right)\\sec^2\\!\\left(2x^4\\right)$',
+   sol:'<p>Three layers: a square, outside a tangent, outside $2x^4$.</p><ol class="steps"><li><div class="mj">$$2\\tan\\!\\left(2x^4\\right)\\cdot\\frac{d}{dx}\\left[\\tan\\!\\left(2x^4\\right)\\right]$$</div><div class="why">peel the square</div></li><li><div class="mj">$$\\frac{d}{dx}\\tan\\!\\left(2x^4\\right)=\\sec^2\\!\\left(2x^4\\right)\\cdot8x^3$$</div><div class="why">peel the tangent</div></li><li><div class="mj">$$2\\tan\\!\\left(2x^4\\right)\\sec^2\\!\\left(2x^4\\right)(8x^3)$$</div><div class="why">multiply all three</div></li></ol><p class="final">$16x^3\\tan\\!\\left(2x^4\\right)\\sec^2\\!\\left(2x^4\\right)$</p>'},
+  {lvl:"exam-level",q:'Find the coordinates of all points on $f(x)=x\\sqrt{14-x^2}$ where the tangent line is horizontal.',accept:["(sqrt7,7),(-sqrt7,-7)","(√7,7)and(-√7,-7)","x=±sqrt7"],ans:'$\\left(\\sqrt7,\\,7\\right)$ and $\\left(-\\sqrt7,\\,-7\\right)$',
+   sol:'<ol class="steps"><li><div class="mj">$$f\'=\\sqrt{14-x^2}+x\\cdot\\frac{-2x}{2\\sqrt{14-x^2}}$$</div><div class="why">product rule, chain on the root</div></li><li><div class="mj">$$=\\frac{(14-x^2)-x^2}{\\sqrt{14-x^2}}=\\frac{14-2x^2}{\\sqrt{14-x^2}}$$</div><div class="why">common denominator</div></li><li><div class="mj">$$14-2x^2=0\\ \\Rightarrow\\ x=\\pm\\sqrt7$$</div><div class="why">horizontal means $f\'=0$</div></li><li><div class="mj">$$f(\\sqrt7)=\\sqrt7\\cdot\\sqrt{14-7}=\\sqrt7\\cdot\\sqrt7=7$$</div><div class="why">get the $y$-coordinates too</div></li></ol><p class="final">$\\left(\\sqrt7,\\,7\\right)$ and $\\left(-\\sqrt7,\\,-7\\right)$</p><p>The question asks for <em>coordinates</em>, so $x=\\pm\\sqrt7$ alone is an incomplete answer.</p>'},
+  {lvl:"word problem",q:'A fish\'s oxygen consumption at speed $v$ is $C(v)=\\sqrt{30v+\\dfrac{80}{v}}$ (mg O₂ per hour). Its speed $t$ minutes after observation begins is $v(t)=1+\\dfrac t2$. Find the rate of change of $C$ with respect to time at $t=2$.',accept:["1/4",".25","0.25"],ans:'$\\tfrac14$ mg of oxygen per hour, per minute',
+   sol:'<ol class="steps"><li><div class="mj">$$\\frac{dC}{dt}=\\frac{dC}{dv}\\cdot\\frac{dv}{dt}$$</div><div class="why">$C$ has no $t$ in it</div></li><li><div class="mj">$$v(2)=1+1=2$$</div><div class="why">convert the time to a speed first</div></li><li><div class="mj">$$30(2)+\\frac{80}{2}=100,\\qquad\\sqrt{100}=10$$</div><div class="why">the inside at $v=2$</div></li><li><div class="mj">$$\\frac{dC}{dv}=\\frac{30-\\frac{80}{v^2}}{2\\sqrt{30v+\\frac{80}{v}}}=\\frac{30-20}{2(10)}=\\frac12$$</div><div class="why">chain rule on the root</div></li><li><div class="mj">$$\\frac{dv}{dt}=\\frac12$$</div><div class="why">from $v(t)=1+t/2$</div></li><li><div class="mj">$$\\frac{dC}{dt}=\\frac12\\cdot\\frac12=\\frac14$$</div><div class="why">multiply</div></li></ol><p class="final">$\\tfrac14$ mg of oxygen per hour, per minute.</p><p>Step 2 is the one people skip. $\\frac{dC}{dv}$ is written in terms of $v$, so you cannot substitute $t=2$ into it.</p>'}]},
+
+{id:"t5",n:"5",name:"Linear approximation",sec:"§6.5",ex:"59–66",
+ lede:"The tangent line hugs the curve near the point of tangency, so near x=a you can use the line instead of the function. That is why this topic exists on a no-calculator exam.",
+ lesson:'<h4>What to know</h4><div class="keybox">$$L(x)=f(a)+f\'(a)(x-a)\\qquad\\Delta f\\approx f\'(a)\\cdot\\Delta x$$</div><p>Use $L(x)$ when asked to <b>estimate a value</b>. Use $\\Delta f$ when asked to estimate <b>how much something changed</b> — same formula with $f(a)$ dropped.</p><p>Choosing $a$ is the whole skill: pick the nearest value where $f(a)$ and $f\'(a)$ are computable by hand. A perfect square, a perfect cube, a power of 2, or an exact angle like $\\tfrac\\pi4$ or $\\tfrac\\pi6$.</p><div class="trapline"><b>Trap.</b> "Estimate the change" wants $\\Delta f$ alone — do not add $f(a)$. Read which one the question asks for. Interpretation sentences need units and context.</div>',
+ qs:[
+  {lvl:"warm-up",q:'Use a linear approximation to estimate $(1.9)^3$.',accept:["6.8"],ans:'$6.8$',
+   sol:'<ol class="steps"><li><div class="mj">$$f(x)=x^3,\\quad a=2,\\quad\\Delta x=-0.1$$</div><div class="why">$2$ is the nearest easy cube</div></li><li><div class="mj">$$f(2)=8,\\qquad f\'(x)=3x^2\\Rightarrow f\'(2)=12$$</div><div class="why">base value and slope</div></li><li><div class="mj">$$L=8+12(-0.1)=8-1.2=6.8$$</div><div class="why">substitute</div></li></ol><p class="final">$6.8$</p><p>$\\Delta x$ is negative because $1.9$ is <em>below</em> $2$. Dropping that sign gives $9.2$, which is the common wrong answer.</p>'},
+  {lvl:"standard",q:'Use a linear approximation to estimate $\\sqrt{96}$.',accept:["9.8","49/5"],ans:'$9.8$',
+   sol:'<ol class="steps"><li><div class="mj">$$f(x)=\\sqrt x,\\quad a=100,\\quad\\Delta x=-4$$</div><div class="why">nearest perfect square</div></li><li><div class="mj">$$f(100)=10,\\qquad f\'(x)=\\frac{1}{2\\sqrt x}\\Rightarrow f\'(100)=\\frac1{20}$$</div><div class="why">base value and slope</div></li><li><div class="mj">$$L=10+\\frac{1}{20}(-4)=10-0.2=9.8$$</div><div class="why">substitute</div></li></ol><p class="final">$9.8$</p><p>Choosing $a=81$ would also be legal but gives a worse estimate — $100$ is closer to $96$.</p>'},
+  {lvl:"exam-level",q:'Use a linear approximation to estimate $(16.32)^{1/4}$.',accept:["2.01"],ans:'$2.01$',
+   sol:'<ol class="steps"><li><div class="mj">$$f(x)=x^{1/4},\\quad a=16,\\quad\\Delta x=0.32$$</div><div class="why">$16=2^4$</div></li><li><div class="mj">$$f(16)=2$$</div><div class="why">base value</div></li><li><div class="mj">$$f\'(x)=\\tfrac14x^{-3/4}\\Rightarrow f\'(16)=\\frac{1}{4\\cdot8}=\\frac{1}{32}$$</div><div class="why">$16^{3/4}=2^3=8$</div></li><li><div class="mj">$$L=2+\\frac{0.32}{32}=2+0.01=2.01$$</div><div class="why">substitute</div></li></ol><p class="final">$2.01$</p><p>Step 3 is where this is won or lost: $16^{3/4}$ means take the fourth root ($2$) then cube it ($8$).</p>'},
+  {lvl:"word problem",q:'A drug\'s concentration is $C(t)=\\dfrac{120t}{t^2+11}$ µg/mL, $t$ hours after administration. Use a linear approximation to estimate $C(2.05)$.',accept:["16.19","16.187","16+14/75"],ans:'$\\approx16.19$ µg/mL',
+   sol:'<ol class="steps"><li><div class="mj">$$C(2)=\\frac{240}{15}=16$$</div><div class="why">$a=2$, the nearby clean value</div></li><li><div class="mj">$$C\'=\\frac{120(t^2+11)-120t(2t)}{(t^2+11)^2}=\\frac{1320-120t^2}{(t^2+11)^2}$$</div><div class="why">quotient rule</div></li><li><div class="mj">$$C\'(2)=\\frac{1320-480}{225}=\\frac{840}{225}=\\frac{56}{15}$$</div><div class="why">evaluate the slope</div></li><li><div class="mj">$$L=16+\\frac{56}{15}(0.05)\\approx16+0.19=16.19$$</div><div class="why">$\\Delta t=0.05$</div></li></ol><p class="final">$\\approx16.19$ µg/mL.</p><p><b>In context:</b> about $16.19$ micrograms per milliliter roughly two hours after the drug is given. The concentration is still rising at this point, though slowly.</p>'}]},
+
+{id:"t6",n:"6",name:"Continuity",sec:"§3.2",ex:"67–76",
+ lede:"One equation holds the entire definition. Memorize it exactly as written — the fill-in-the-blank questions are literally this.",
+ lesson:'<h4>What to know</h4><div class="keybox">$$f\\text{ is continuous at }x=a\\iff f(a)=\\lim_{x\\to a}f(x)$$</div><p>That one statement packs three requirements: $f(a)$ exists, the limit exists, and they are equal.</p><p>Three ways it breaks: a <b>removable</b> hole (limit exists, $f(a)$ sits elsewhere), a <b>jump</b> (one-sided limits disagree), and an <b>infinite</b> break (vertical asymptote).</p><p>Differentiable implies continuous; the reverse is false. Continuous but not differentiable happens at a <b>corner</b> (one-sided slopes disagree) or a <b>vertical tangent</b> (slope runs to infinity). Both are unbroken curves.</p><div class="trapline"><b>For piecewise problems:</b> only the junctions matter. Each individual piece — a polynomial, an exponential — is already continuous wherever it is defined.</div>',
+ qs:[
+  {lvl:"warm-up",q:'Where is $f$ discontinuous? $f(x)=20+5x$ if $x<-2$; $x^2+10x$ if $-2\\le x<1$; $\\ln x+11$ if $x\\ge1$.',accept:["x=-2","-2","only x=-2"],ans:'Only at $x=-2$',
+   sol:'<ol class="steps"><li><div class="mj">$$x\\to-2^-:\\ 20-10=10$$</div><div class="why">left piece</div></li><li><div class="mj">$$x\\to-2^+:\\ 4-20=-16$$</div><div class="why">right piece — they disagree</div></li><li><div class="mj">$$x\\to1^-:\\ 1+10=11$$</div><div class="why">left piece at the other junction</div></li><li><div class="mj">$$x\\to1^+:\\ \\ln1+11=11\\ \\checkmark$$</div><div class="why">they agree — continuous here</div></li></ol><p class="final">Discontinuous only at $x=-2$ (a jump).</p><p>Checking only one junction and stopping is the usual error. There are two.</p>'},
+  {lvl:"standard",q:'Find $k$ making $f$ continuous everywhere, or say none exists. $f(x)=ke^{x-3}-5$ if $x<3$; $7$ if $x=3$; $x^2+kx+4$ if $x>3$.',accept:["none","no such k","no such value","dne","none exists"],ans:'No such $k$ exists',
+   sol:'<ol class="steps"><li><div class="mj">$$x\\to3^-:\\ ke^0-5=k-5$$</div><div class="why">left limit</div></li><li><div class="mj">$$k-5=7\\ \\Rightarrow\\ k=12$$</div><div class="why">must equal $f(3)=7$</div></li><li><div class="mj">$$x\\to3^+:\\ 9+3k+4=13+3k$$</div><div class="why">right limit</div></li><li><div class="mj">$$13+3k=7\\ \\Rightarrow\\ k=-2$$</div><div class="why">must also equal 7</div></li><li><div class="mj">$$k=12\\ \\text{and}\\ k=-2\\ \\text{contradict}$$</div><div class="why">no single value works</div></li></ol><p class="final">No such $k$ exists.</p><p>"Or determine that no such value exists" in the prompt is a real hint that this is a possible outcome. Show both equations and the contradiction.</p>'},
+  {lvl:"exam-level",q:'Find $A$ and $B$ making $f$ continuous for all $x$. $f(x)=Ax^2+Bx+3$ if $x<2$; $A$ if $x=2$; $2B-x^3$ if $x>2$.',accept:["A=-11/4,B=21/8","-11/4,21/8"],ans:'$A=-\\tfrac{11}{4}$, $B=\\tfrac{21}{8}$',
+   sol:'<p>Both one-sided limits must equal $f(2)=A$.</p><ol class="steps"><li><div class="mj">$$4A+2B+3=A\\ \\Rightarrow\\ 3A+2B+3=0$$</div><div class="why">left limit = $A$ &nbsp;(i)</div></li><li><div class="mj">$$2B-8=A$$</div><div class="why">right limit = $A$ &nbsp;(ii)</div></li><li><div class="mj">$$3(2B-8)+2B+3=0$$</div><div class="why">substitute (ii) into (i)</div></li><li><div class="mj">$$6B-24+2B+3=0\\ \\Rightarrow\\ 8B=21$$</div><div class="why">$B=\\tfrac{21}{8}$</div></li><li><div class="mj">$$A=2\\!\\left(\\tfrac{21}{8}\\right)-8=\\tfrac{21}{4}-\\tfrac{32}{4}=-\\tfrac{11}{4}$$</div><div class="why">back-substitute</div></li></ol><p class="final">$A=-\\tfrac{11}{4}$, $B=\\tfrac{21}{8}$</p><p>The middle piece being a single value is what makes this three expressions and two equations.</p>'},
+  {lvl:"word problem",q:'A patient starts with 40 mg of a medication. The body clears it at 5 mg per hour. Every 4 hours, starting at $t=4$, a dose adds 30 mg instantly. Calculate $M(6)$.',accept:["40","40mg","40 mg"],ans:'$40$ mg',
+   sol:'<ol class="steps"><li><div class="mj">$$40-5(4)=20$$</div><div class="why">just before the first dose at $t=4$</div></li><li><div class="mj">$$20+30=50$$</div><div class="why">the dose lands; $M(4)=50$</div></li><li><div class="mj">$$50-5(2)=40$$</div><div class="why">two more hours of clearing</div></li></ol><p class="final">$M(6)=40$ mg.</p><p><b>Is $M$ continuous?</b> No. At $t=4$ the left limit is $20$ but $M(4)=50$ — a jump discontinuity, and another at $t=8$. The model treats each dose as entering the bloodstream instantaneously.</p>'}]},
+
+{id:"t7",n:"7",name:"Asymptotes &amp; limits at infinity",sec:"§3.1",ex:"77–84",
+ lede:"Two different questions students blur together. Vertical asymptotes come from x-values that break the function. Horizontal asymptotes come from the far ends of the graph.",
+ lesson:'<h4>What to know</h4><div class="keybox">$$\\lim_{x\\to a^{\\pm}}f(x)=\\pm\\infty\\Rightarrow\\text{VA at }x=a$$$$\\lim_{x\\to\\pm\\infty}f(x)=L\\Rightarrow\\text{HA at }y=L$$</div><p>For a VA: find where the denominator is zero <b>and the numerator is not</b>. If both are zero, factor — it may be a hole instead.</p><p>For an HA on a rational function, compare degrees. Top &lt; bottom → $y=0$. Equal → ratio of leading coefficients. Top &gt; bottom → none.</p><p>For exponentials, divide top and bottom by the fastest-growing term. Remember $e^x\\to0$ as $x\\to-\\infty$ but $e^x\\to+\\infty$ as $x\\to+\\infty$ — the two ends behave completely differently, so <b>check both separately</b>.</p><div class="trapline"><b>Trap.</b> $\\ln x$ has a VA at $x=0$ and <em>no</em> HA — it grows slowly but without bound.</div>',
+ qs:[
+  {lvl:"warm-up",q:'Find all vertical and horizontal asymptotes of $g(x)=\\dfrac{3x^2-21x-54}{x^2-10x+9}$.',accept:["x=1,y=3","va x=1 ha y=3","x=1 and y=3"],ans:'VA at $x=1$; HA at $y=3$',
+   sol:'<ol class="steps"><li><div class="mj">$$3x^2-21x-54=3(x-9)(x+2)$$</div><div class="why">factor the top</div></li><li><div class="mj">$$x^2-10x+9=(x-9)(x-1)$$</div><div class="why">factor the bottom</div></li><li><div class="mj">$$=\\frac{3(x+2)}{x-1}$$</div><div class="why">$x-9$ cancels — a hole, not a VA</div></li><li><div class="mj">$$x=1\\ \\text{remains}$$</div><div class="why">VA</div></li><li><div class="mj">$$\\deg=\\deg\\Rightarrow y=\\tfrac31=3$$</div><div class="why">HA from leading coefficients</div></li></ol><p class="final">VA at $x=1$; HA at $y=3$. There is a <em>hole</em> at $x=9$, not an asymptote.</p><p>Calling $x=9$ a vertical asymptote is the trap this problem is built around. Always factor first.</p>'},
+  {lvl:"standard",q:'Find all horizontal asymptotes of $f(x)=\\dfrac{2e^x+4}{1-e^x}$.',accept:["y=4,y=-2","y=4 and y=-2","4,-2","y=-2,y=4"],ans:'$y=4$ and $y=-2$',
+   sol:'<ol class="steps"><li><div class="mj">$$x\\to-\\infty:\\ e^x\\to0$$</div><div class="why">substitute directly</div></li><li><div class="mj">$$\\to\\frac{0+4}{1-0}=4$$</div><div class="why">first HA</div></li><li><div class="mj">$$x\\to+\\infty:\\ \\frac{\\infty}{-\\infty}$$</div><div class="why">indeterminate — need algebra</div></li><li><div class="mj">$$\\cdot\\frac{e^{-x}}{e^{-x}}=\\frac{2+4e^{-x}}{e^{-x}-1}$$</div><div class="why">divide by $e^x$</div></li><li><div class="mj">$$\\to\\frac{2+0}{0-1}=-2$$</div><div class="why">second HA</div></li></ol><p class="final">$y=4$ and $y=-2$.</p><p>Two different ends, two different asymptotes. Checking only one direction is the most common way to lose half the credit here.</p>'},
+  {lvl:"exam-level",q:'Suppose $g$ is continuous on $(-\\infty,\\infty)$ and $h(x)=\\dfrac{g(x)}{x-7}$. Is $x=7$ necessarily a vertical asymptote of $h$? Answer yes or no.',accept:["no"],ans:'No',
+   sol:'<p>A zero denominator alone does not create a vertical asymptote. The numerator has to be nonzero there.</p><ol class="steps"><li><div class="mj">$$\\text{If }g(7)\\neq0:\\ \\frac{\\text{nonzero}}{0}\\Rightarrow\\text{VA}$$</div><div class="why">the usual case</div></li><li><div class="mj">$$\\text{If }g(7)=0:\\ \\frac00$$</div><div class="why">indeterminate — may be finite</div></li><li><div class="mj">$$g(x)=x-7\\ \\Rightarrow\\ h(x)=1$$</div><div class="why">a concrete counterexample</div></li></ol><p class="final">No — not necessarily.</p><p>A full-credit answer names the counterexample. If $g(x)=x-7$, then $h(x)=1$ for every $x\\neq7$, which has no asymptote at all.</p>'},
+  {lvl:"word problem",q:'The number of people who have seen a piece of disinformation $t$ hours after it starts spreading is $N(t)=\\dfrac{80}{1+39e^{-0.5t}}$ thousand people. Evaluate $\\lim\\limits_{t\\to+\\infty}N(t)$.',accept:["80","80 thousand","80000"],ans:'$80$ (thousand people)',
+   sol:'<ol class="steps"><li><div class="mj">$$t\\to+\\infty:\\ -0.5t\\to-\\infty$$</div><div class="why">watch the sign in the exponent</div></li><li><div class="mj">$$e^{-0.5t}\\to0$$</div><div class="why">exponential decay</div></li><li><div class="mj">$$N\\to\\frac{80}{1+39(0)}=\\frac{80}{1}=80$$</div><div class="why">substitute</div></li></ol><p class="final">$80$ thousand people.</p><p><b>In context:</b> the number who have seen it levels off at about $80{,}000$ — a ceiling it approaches but never passes, no matter how long the post circulates. This $S$-shaped model is called logistic growth, and $80$ is its carrying capacity.</p>'}]},
+
+{id:"t8",n:"8",name:"Critical numbers &amp; extrema",sec:"§5.1–5.2",ex:"85–90",
+ lede:"A four-step procedure that never changes. Run it identically every time and these become mechanical.",
+ lesson:'<h4>What to know</h4><div class="keybox">$$c\\text{ is critical}\\iff c\\in\\text{domain}(f)\\ \\text{and}\\ \\big(f\'(c)=0\\ \\text{or}\\ f\'(c)\\ \\text{undefined}\\big)$$</div><p><b>1.</b> State the domain first. <b>2.</b> Compute $f\'$ and <b>factor completely</b>. <b>3.</b> Set each factor to zero; also find where $f\'$ is undefined; keep only values in the domain. <b>4.</b> Sign chart — test one point per interval.</p><p>First derivative test: $+\\to-$ is a maximum, $-\\to+$ is a minimum, no sign change is neither.</p><div class="trapline"><b>The distinction that gets tested.</b> For $f(x)=x^2+\\tfrac{54}{x}$, $f\'$ is undefined at $x=0$ — but $0$ is not in the domain, so it is <em>not</em> a critical number. It still splits your intervals.</div>',
+ qs:[
+  {lvl:"warm-up",q:'Find the critical numbers of $f(x)=3\\ln x+\\dfrac8x$ and classify them.',accept:["8/3","x=8/3","8/3 rel min","relative minimum at 8/3"],ans:'$x=\\tfrac83$, a relative minimum',
+   sol:'<ol class="steps"><li><div class="mj">$$\\text{domain: }x>0$$</div><div class="why">because of $\\ln x$</div></li><li><div class="mj">$$f\'=\\frac3x-\\frac{8}{x^2}=\\frac{3x-8}{x^2}$$</div><div class="why">common denominator</div></li><li><div class="mj">$$3x-8=0\\Rightarrow x=\\tfrac83$$</div><div class="why">$x=0$ excluded by the domain</div></li><li><div class="mj">$$x=1:\\ \\tfrac{-5}{1}<0;\\qquad x=3:\\ \\tfrac{1}{9}>0$$</div><div class="why">sign chart</div></li></ol><p class="final">$x=\\tfrac83$ is a relative minimum ($-\\to+$).</p>'},
+  {lvl:"standard",q:'Find the critical numbers of $f(x)=\\dfrac{x^2}{x-3}$ and classify them.',accept:["0 and 6","x=0,x=6","0,6","max at 0 min at 6"],ans:'$x=0$ (rel. max) and $x=6$ (rel. min)',
+   sol:'<ol class="steps"><li><div class="mj">$$\\text{domain: }x\\neq3$$</div><div class="why">state it first</div></li><li><div class="mj">$$f\'=\\frac{2x(x-3)-x^2}{(x-3)^2}=\\frac{x^2-6x}{(x-3)^2}$$</div><div class="why">quotient rule</div></li><li><div class="mj">$$=\\frac{x(x-6)}{(x-3)^2}$$</div><div class="why">factor</div></li><li><div class="mj">$$x=0,\\ x=6\\quad(x=3\\ \\text{not in domain})$$</div><div class="why">critical numbers</div></li><li><div class="mj">$$-1:+\\ \\ \\ 1:-\\ \\ \\ 4:-\\ \\ \\ 7:+$$</div><div class="why">test around $0,3,6$</div></li></ol><p class="final">Rel. max at $x=0$ ($f=0$); rel. min at $x=6$ ($f=12$).</p><p>No sign change across $x=3$ — it is a vertical asymptote, not an extremum, but it still had to split the chart.</p>'},
+  {lvl:"exam-level",q:'Find the critical numbers of $f(x)=x^{2/3}(x-4)$ and classify them.',accept:["0 and 8/5","x=0,x=8/5","0,8/5"],ans:'$x=0$ (rel. max) and $x=\\tfrac85$ (rel. min)',
+   sol:'<ol class="steps"><li><div class="mj">$$f=x^{5/3}-4x^{2/3}$$</div><div class="why">distribute first — much easier</div></li><li><div class="mj">$$f\'=\\tfrac53x^{2/3}-\\tfrac83x^{-1/3}$$</div><div class="why">power rule</div></li><li><div class="mj">$$=\\frac{5x-8}{3x^{1/3}}$$</div><div class="why">common denominator $3x^{1/3}$</div></li><li><div class="mj">$$5x-8=0\\Rightarrow x=\\tfrac85;\\quad f\'\\ \\text{undefined at }x=0$$</div><div class="why">$0$ <em>is</em> in the domain, so it counts</div></li><li><div class="mj">$$-1:\\tfrac{-13}{-3}>0;\\ \\ 1:\\tfrac{-3}{3}<0;\\ \\ 8:\\tfrac{32}{6}>0$$</div><div class="why">sign chart</div></li></ol><p class="final">Rel. max at $x=0$; rel. min at $x=\\tfrac85$.</p><p>This is the mirror image of the $x^2+\\tfrac{54}{x}$ trap. Here $f\'$ is undefined at $0$ <em>and</em> $0$ is in the domain, so it <b>is</b> a critical number.</p>'},
+  {lvl:"word problem",q:'A predator population is $P(t)=120+20\\sin\\!\\left(\\tfrac{\\pi t}{6}\\right)+20\\sin^2\\!\\left(\\tfrac{\\pi t}{6}\\right)$ animals/km², $t$ in months. Find the critical numbers of $P$ on $(0,12)$.',accept:["3,7,9,11","t=3,7,9,11","3 7 9 11"],ans:'$t=3,\\,7,\\,9,\\,11$',
+   sol:'<ol class="steps"><li><div class="mj">$$P\'=\\tfrac{20\\pi}{6}\\cos\\!\\left(\\tfrac{\\pi t}{6}\\right)+\\tfrac{40\\pi}{6}\\sin\\!\\left(\\tfrac{\\pi t}{6}\\right)\\cos\\!\\left(\\tfrac{\\pi t}{6}\\right)$$</div><div class="why">chain rule on both terms</div></li><li><div class="mj">$$=\\tfrac{20\\pi}{6}\\cos\\!\\left(\\tfrac{\\pi t}{6}\\right)\\left[1+2\\sin\\!\\left(\\tfrac{\\pi t}{6}\\right)\\right]$$</div><div class="why">factor — the key step</div></li><li><div class="mj">$$\\cos\\!\\left(\\tfrac{\\pi t}{6}\\right)=0\\Rightarrow\\tfrac{\\pi t}{6}=\\tfrac\\pi2,\\tfrac{3\\pi}{2}$$</div><div class="why">gives $t=3,\\ 9$</div></li><li><div class="mj">$$\\sin\\!\\left(\\tfrac{\\pi t}{6}\\right)=-\\tfrac12\\Rightarrow\\tfrac{\\pi t}{6}=\\tfrac{7\\pi}{6},\\tfrac{11\\pi}{6}$$</div><div class="why">gives $t=7,\\ 11$</div></li></ol><p class="final">$t=3,\\,7,\\,9,\\,11$ months.</p><p><b>In context:</b> four turning points in a year — the population peaks and bottoms out twice as the seasons cycle. Factoring at step 2 is what makes this solvable without a calculator.</p>'}]},
+
+{id:"t9",n:"9",name:"Concavity &amp; inflection",sec:"§5.3",ex:"91–95",
+ lede:"Same procedure as the last topic, one derivative higher. The second derivative tells you how the slope itself is changing — the curve's bend.",
+ lesson:'<h4>What to know</h4><div class="keybox">$$f\'\'>0\\Rightarrow\\text{concave up}\\qquad f\'\'<0\\Rightarrow\\text{concave down}$$</div><p>An <b>inflection point</b> is where concavity actually <em>changes sign</em>, and the point is in the domain. $f\'\'(c)=0$ alone is not enough.</p><p><b>Second derivative test</b> at a critical number where $f\'(c)=0$: $f\'\'(c)>0$ means a minimum (sitting in a bowl), $f\'\'(c)<0$ means a maximum (sitting on a hill), $f\'\'(c)=0$ is <b>inconclusive</b> — fall back to the first derivative test.</p><div class="trapline"><b>Trap.</b> $f(x)=x^4$ at $x=0$ has $f\'\'=0$ but $f\'\'=12x^2$ never changes sign, so it is not an inflection point. And a concavity change at a vertical asymptote is not one either — the point is not in the domain.</div>',
+ qs:[
+  {lvl:"warm-up",q:'Find where $f(x)=\\ln\\!\\left(x^2+8\\right)$ is concave upward.',accept:["(-2sqrt2,2sqrt2)","-2√2<x<2√2","(-2sqrt(2),2sqrt(2))"],ans:'Concave up on $\\left(-2\\sqrt2,\\,2\\sqrt2\\right)$',
+   sol:'<ol class="steps"><li><div class="mj">$$f\'=\\frac{2x}{x^2+8}$$</div><div class="why">$(\\ln g)\'=g\'/g$</div></li><li><div class="mj">$$f\'\'=\\frac{2(x^2+8)-2x(2x)}{(x^2+8)^2}=\\frac{16-2x^2}{(x^2+8)^2}$$</div><div class="why">quotient rule</div></li><li><div class="mj">$$(x^2+8)^2>0\\ \\text{always}$$</div><div class="why">only the top matters</div></li><li><div class="mj">$$16-2x^2>0\\Rightarrow x^2<8\\Rightarrow|x|<2\\sqrt2$$</div><div class="why">solve the inequality</div></li></ol><p class="final">Concave up on $\\left(-2\\sqrt2,\\,2\\sqrt2\\right)$, concave down outside it; inflection points at $x=\\pm2\\sqrt2$.</p>'},
+  {lvl:"standard",q:'Find all inflection points of $f(x)=x^5-20x^4$.',accept:["x=12","12","only x=12"],ans:'Only $x=12$',
+   sol:'<ol class="steps"><li><div class="mj">$$f\'=5x^4-80x^3$$</div><div class="why">first derivative</div></li><li><div class="mj">$$f\'\'=20x^3-240x^2=20x^2(x-12)$$</div><div class="why">factor</div></li><li><div class="mj">$$f\'\'=0\\ \\text{at}\\ x=0,\\ 12$$</div><div class="why">candidates only</div></li><li><div class="mj">$$x=-1:(+)(-)<0;\\ \\ x=1:(+)(-)<0$$</div><div class="why">no sign change at $0$</div></li><li><div class="mj">$$x=13:(+)(+)>0$$</div><div class="why">sign flips at $12$</div></li></ol><p class="final">Inflection point only at $x=12$.</p><p>$x=0$ is the trap. $f\'\'=0$ there, but $20x^2$ is positive on both sides, so concavity never changes.</p>'},
+  {lvl:"exam-level",q:'Use the Second Derivative Test to classify the critical numbers of $f(x)=x^2e^{-x}$.',accept:["min at 0 max at 2","x=0 min, x=2 max","0 min 2 max"],ans:'$x=0$ is a relative min; $x=2$ is a relative max',
+   sol:'<ol class="steps"><li><div class="mj">$$f\'=2xe^{-x}-x^2e^{-x}=e^{-x}x(2-x)$$</div><div class="why">product rule, then factor</div></li><li><div class="mj">$$x=0,\\ x=2$$</div><div class="why">critical numbers ($e^{-x}\\neq0$)</div></li><li><div class="mj">$$f\'\'=e^{-x}\\left(x^2-4x+2\\right)$$</div><div class="why">differentiate $(2x-x^2)e^{-x}$</div></li><li><div class="mj">$$f\'\'(0)=1\\cdot2=2>0$$</div><div class="why">relative minimum</div></li><li><div class="mj">$$f\'\'(2)=e^{-2}(4-8+2)=-2e^{-2}<0$$</div><div class="why">relative maximum</div></li></ol><p class="final">Rel. min at $x=0$; rel. max at $x=2$.</p><p>The test is quicker than a sign chart here because both $f\'\'$ values are easy. When $f\'\'(c)=0$ it tells you nothing and you must go back to the first derivative test.</p>'},
+  {lvl:"word problem",q:'A medication\'s concentration is $C(t)=20te^{-t/2}$ mg/L, $t\\ge0$ hours. At what time does $C$ have an inflection point?',accept:["t=4","4","4 hours"],ans:'$t=4$ hours',
+   sol:'<ol class="steps"><li><div class="mj">$$C\'=20e^{-t/2}+20t\\!\\left(-\\tfrac12\\right)\\!e^{-t/2}=10e^{-t/2}(2-t)$$</div><div class="why">product + chain rule</div></li><li><div class="mj">$$C\'\'=5e^{-t/2}(t-4)$$</div><div class="why">differentiate again and factor</div></li><li><div class="mj">$$t-4=0\\Rightarrow t=4$$</div><div class="why">$e^{-t/2}\\neq0$</div></li><li><div class="mj">$$t<4:\\ (-)\\ \\text{CD};\\qquad t>4:\\ (+)\\ \\text{CU}$$</div><div class="why">sign really changes ✓</div></li></ol><p class="final">$t=4$ hours.</p><p><b>In context:</b> $C$ peaks at $t=2$ and falls after. The inflection at $t=4$ is the moment the concentration is dropping <em>fastest</em> — past that point it still falls, but more and more slowly as the drug clears.</p>'}]},
+
+{id:"t10",n:"10",name:"Curve analysis",sec:"§5.4",ex:"96–103",
+ lede:"The hardest questions on this exam live here, and they fail for one reason: the curve drawn on the page is f′, not f. Translate before you answer.",
+ lesson:'<h4>What to know</h4><div class="keybox">$$\\textbf{HEIGHT of the drawn }f\'\\ \\longrightarrow\\ \\text{tells you about }f$$$$\\textbf{SLOPE of the drawn }f\'\\ \\longrightarrow\\ \\text{tells you about }f\'\\ (\\text{so, concavity of }f)$$</div><p>Above the axis → $f$ increasing. Below → $f$ decreasing. Crosses the axis → critical number of $f$; $-\\to+$ is a min, $+\\to-$ is a max. Touches without crossing → critical number, no extremum.</p><p>Rising → $f$ concave up. Falling → $f$ concave down. A peak or valley of the drawn curve → inflection point of $f$.</p><div class="trapline"><b>The trap that catches almost everyone.</b> Where the drawn curve is <em>falling but still above the axis</em>, $f$ is still <b>increasing</b> — just more slowly. Falling tells you about concavity, not direction.</div>',
+ qs:[
+  {lvl:"warm-up",q:'Complete: if $f\'(x)$ changes from ___ to ___ at $x=c$, then $f$ has a relative minimum at $x=c$.',accept:["negative to positive","negative,positive","neg to pos","- to +"],ans:'negative to positive',
+   sol:'<p>Before $c$ the function is falling ($f\'<0$); after $c$ it is rising ($f\'>0$). The bottom of the dip is at $c$.</p><p class="final">negative to positive</p><p>Reversed — positive to negative — gives a relative maximum. No sign change at all gives neither.</p>'},
+  {lvl:"standard",q:'Given $f(x)=\\dfrac{x}{x^3+8}$ and $f\'(x)=\\dfrac{-2\\left(x^3-4\\right)}{\\left(x^3+8\\right)^2}$, find where $f$ is increasing.',accept:["(-inf,-2)and(-2,cuberoot4)","(-∞,-2)∪(-2,4^(1/3))","x<4^(1/3), x≠-2"],ans:'$(-\\infty,-2)$ and $\\left(-2,\\sqrt[3]{4}\\right)$',
+   sol:'<ol class="steps"><li><div class="mj">$$\\text{domain: }x^3+8\\neq0\\Rightarrow x\\neq-2$$</div><div class="why">state it first</div></li><li><div class="mj">$$\\left(x^3+8\\right)^2>0\\ \\text{always}$$</div><div class="why">even power — sign comes from the top</div></li><li><div class="mj">$$-2\\left(x^3-4\\right)>0\\Rightarrow x^3<4$$</div><div class="why">divide by $-2$, flip the inequality</div></li><li><div class="mj">$$x<\\sqrt[3]{4}$$</div><div class="why">but $x=-2$ is excluded</div></li></ol><p class="final">Increasing on $(-\\infty,-2)$ and $\\left(-2,\\sqrt[3]{4}\\right)$.</p><p>Writing it as one interval $\\left(-\\infty,\\sqrt[3]4\\right)$ is wrong — the function is not even defined at $-2$, so the interval must be split there.</p>'},
+  {lvl:"exam-level",q:'$f(x)=x^3+Ax^2+Bx$ has a relative extremum at $x=-2$ and an inflection point at $x=3$. Find $A$ and $B$.',accept:["A=-9,B=-48","-9,-48","a=-9 b=-48"],ans:'$A=-9$, $B=-48$',
+   sol:'<ol class="steps"><li><div class="mj">$$f\'=3x^2+2Ax+B,\\qquad f\'\'=6x+2A$$</div><div class="why">both derivatives</div></li><li><div class="mj">$$f\'\'(3)=0:\\ 18+2A=0\\Rightarrow A=-9$$</div><div class="why">inflection ⇒ $f\'\'=0$ — solve this first</div></li><li><div class="mj">$$f\'(-2)=0:\\ 12-4A+B=0$$</div><div class="why">extremum ⇒ $f\'=0$</div></li><li><div class="mj">$$12+36+B=0\\Rightarrow B=-48$$</div><div class="why">substitute $A=-9$</div></li></ol><p class="final">$A=-9$, $B=-48$.</p><p>Doing the inflection condition first is what makes this easy — it involves only $A$, so you get one unknown at a time. Bonus: $f\'\'(-2)=-12-18=-30<0$, so $x=-2$ is a relative <em>maximum</em>.</p>'},
+  {lvl:"word problem",q:'$N(t)$ is the total number of outbreak cases, $t$ weeks in. $N$ is concave up before $t=T$ and concave down after. What happens to the number of <em>new</em> cases per week at $t=T$?',accept:["it is at its maximum","maximum","it peaks","new cases per week peak"],ans:'It reaches its maximum',
+   sol:'<ol class="steps"><li><div class="mj">$$N\'(t)=\\text{new cases per week}$$</div><div class="why">rate of change of the total</div></li><li><div class="mj">$$t<T:\\ N\'\'>0\\Rightarrow N\'\\ \\text{increasing}$$</div><div class="why">new cases rising</div></li><li><div class="mj">$$t>T:\\ N\'\'<0\\Rightarrow N\'\\ \\text{decreasing}$$</div><div class="why">new cases falling</div></li><li><div class="mj">$$\\Rightarrow N\'\\ \\text{peaks at }t=T$$</div><div class="why">first derivative test applied to $N\'$</div></li></ol><p class="final">New cases per week reach their maximum at $t=T$.</p><p><b>Why "we hit the inflection point, so the outbreak is over" is misleading:</b> $N\'$ is still <em>positive</em> after $T$. New cases keep arriving and the total keeps climbing — just more slowly each week. The inflection is good news about the <em>rate</em>, not an end to the outbreak.</p>'}]}
+];
+
+var FORMULAS=[
+{g:'Limits and the derivative',items:[
+ {n:'Definition of the derivative',f:"f'(a)=\\lim_{h\\to0}\\frac{f(a+h)-f(a)}{h}",
+  e:"f(x)=\\sqrt{x+6},\\ a=5:\\quad f'(5)=\\lim_{h\\to0}\\frac{\\sqrt{11+h}-\\sqrt{11}}{h}",
+  note:'Substitute the formula in — your answer may not contain the symbol $f$.'},
+ {n:'Second form (point sliding in)',f:"f'(a)=\\lim_{x\\to a}\\frac{f(x)-f(a)}{x-a}",
+  e:"f(x)=\\sqrt{2x+5},\\ a=2:\\quad\\lim_{x\\to2}\\frac{\\sqrt{2x+5}-3}{x-2}=\\frac13",
+  note:'Easier when the limit you are handed already has $x\\to a$ under it.'},
+ {n:'Average rate of change',f:"\\frac{f(b)-f(a)}{b-a}",
+  e:"W(t)=2t^2+5t+10,\\ [2,5]:\\quad\\frac{85-28}{3}=19",
+  note:'The slope of a secant. Units: output per input — here gallons per minute.'},
+ {n:'Clearing a 0/0 — factor',f:"\\frac{(x-4)(x-6)}{(x-6)(x-1)}=\\frac{x-4}{x-1}",
+  e:"\\lim_{x\\to6}\\frac{(x-5)^2-1}{x^2-7x+6}=\\frac{2}{5}",
+  note:'Legal because $x$ approaches 6 but never equals it.'},
+ {n:'Clearing a 0/0 — conjugate',f:"\\cdot\\frac{\\sqrt{A}+B}{\\sqrt{A}+B}\\ \\Rightarrow\\ \\frac{A-B^2}{\\cdots}",
+  e:"\\lim_{x\\to3}\\frac{6-2x}{\\sqrt{37+4x}-7}=-7",
+  note:'Use whenever a square root sits in the part that goes to zero.'},
+ {n:'Clearing a 0/0 — common denominator',f:"\\frac{\\frac{A}{B}+C}{D}=\\frac{A+BC}{BD}",
+  e:"\\lim_{t\\to0}\\left(\\frac{7}{t}-\\frac{35}{t^2+5t}\\right)=\\frac75",
+  note:'Combine the top over one denominator first, then cancel.'}
+]},
+{g:'Derivative rules',items:[
+ {n:'Power rule',f:"\\frac{d}{dx}\\left[x^{n}\\right]=nx^{n-1}",
+  e:"\\frac{23}{x^{2}}=23x^{-2}\\ \\to\\ -46x^{-3}=-\\frac{46}{x^{3}}",
+  note:'Rewrite roots and reciprocals as powers first. Works for negative and fractional $n$.'},
+ {n:'Exponential and logarithm',f:"\\frac{d}{dx}e^{x}=e^{x}\\qquad\\frac{d}{dx}\\ln x=\\frac1x",
+  e:"\\frac{d}{dx}\\left[24\\ln c-5c\\right]=\\frac{24}{c}-5",
+  note:'$\\ln x$ forces the domain $x>0$ — that matters for critical numbers.'},
+ {n:'Trig',f:"\\sin\\to\\cos\\quad\\cos\\to-\\sin\\quad\\tan\\to\\sec^{2}\\quad\\sec\\to\\sec\\tan",
+  e:"\\frac{d}{dx}\\left[10x^{3}+\\sec x\\right]=30x^{2}+\\sec x\\tan x",
+  note:'The minus sign on $\\cos$ is the one people drop.'},
+ {n:'Product rule',f:"(uv)'=u'v+uv'",
+  e:"\\left(x^{4}\\ln x\\right)'=4x^{3}\\ln x+x^{3}",
+  note:'Symmetric — order does not matter. Two terms, added.'},
+ {n:'Quotient rule',f:"\\left(\\frac{u}{v}\\right)'=\\frac{u'v-uv'}{v^{2}}",
+  e:"\\left(\\frac{12t+24}{2t+3}\\right)'=\\frac{-12}{(2t+3)^{2}}",
+  note:'NOT symmetric. $u\'v$ first, then minus. Reversing it negates your whole answer.'},
+ {n:'Chain rule',f:"\\frac{d}{dx}f\\big(g(x)\\big)=f'\\big(g(x)\\big)\\cdot g'(x)",
+  e:"\\frac{d}{dx}\\sin^{5}x=5\\sin^{4}x\\cdot\\cos x",
+  note:'Derivative of the outside, inside untouched, times the inside derivative.'},
+ {n:'Chain rule for rates',f:"\\frac{dR}{dt}=\\frac{dR}{dT}\\cdot\\frac{dT}{dt}",
+  e:"R(T),\\ T(t)=36+2t,\\ t=1:\\ \\text{first find }T(1)=38",
+  note:'Convert the time to the middle variable before substituting.'},
+ {n:'Common chain shortcuts',f:"\\left(e^{kx}\\right)'=ke^{kx}\\qquad\\big(\\ln g\\big)'=\\frac{g'}{g}",
+  e:"\\left(e^{-4x}\\right)'=-4e^{-4x};\\quad\\big(\\ln(x^{3}+30)\\big)'=\\frac{3x^{2}}{x^{3}+30}",
+  note:'These two cover most of the exponential and log work on this exam.'}
+]},
+{g:'Tangent lines and approximation',items:[
+ {n:'Point-slope form',f:"y-y_1=m(x-x_1)",
+  e:"f(1)=e^{3},\\ f'(1)=11e^{3}:\\quad y=11e^{3}x-10e^{3}",
+  note:'A tangent line needs two things: the point from $f$, the slope from $f\'$.'},
+ {n:'Linearization — estimate a value',f:"L(x)=f(a)+f'(a)(x-a)",
+  e:"\\sqrt{96}:\\ a=100,\\ 10+\\tfrac{1}{20}(-4)=9.8",
+  note:'Pick $a$ at the nearest perfect square, cube, power of 2, or exact angle.'},
+ {n:'Estimate a change',f:"\\Delta f\\approx f'(a)\\cdot\\Delta x",
+  e:"M(t)=5\\sqrt{t+9},\\ 7\\to7.4:\\ \\tfrac58(0.4)=0.25\\text{ kg}",
+  note:'Same formula with $f(a)$ dropped. Read which one the question wants.'}
+]},
+{g:'Continuity',items:[
+ {n:'Definition',f:"f\\text{ continuous at }a\\iff f(a)=\\lim_{x\\to a}f(x)",
+  e:"\\text{Fill-in-the-blank answer: } f(4)=\\lim_{x\\to4}f(x)",
+  note:'Packs all three conditions: $f(a)$ exists, the limit exists, they agree.'},
+ {n:'Piecewise junction',f:"\\lim_{x\\to c^{-}}f=\\lim_{x\\to c^{+}}f=f(c)",
+  e:"\\text{At }x=0:\\ A+B+3=14B\\ \\Rightarrow\\ A+3=13B",
+  note:'Only the junctions matter — each piece is already continuous on its own.'},
+ {n:'Continuous but not differentiable',f:"\\text{corner, or vertical tangent}",
+  e:"|x-2|\\ \\text{(corner)};\\quad\\sqrt[3]{x-2}\\ \\text{(vertical tangent)}",
+  note:'Differentiable implies continuous. The reverse is false.'}
+]},
+{g:'Asymptotes and limits at infinity',items:[
+ {n:'Vertical asymptote',f:"\\lim_{x\\to a^{\\pm}}f(x)=\\pm\\infty",
+  e:"\\frac{3(x-9)(x+2)}{(x-9)(x-1)}:\\ \\text{VA at }x=1,\\ \\text{hole at }x=9",
+  note:'Denominator zero AND numerator nonzero. Factor first or you will call a hole an asymptote.'},
+ {n:'Horizontal asymptote — degrees',f:"\\frac{\\deg\\text{top}}{\\deg\\text{bottom}}:\\ <\\Rightarrow y=0,\\ =\\Rightarrow\\frac{a}{b},\\ >\\Rightarrow\\text{none}",
+  e:"\\frac{5x^{3}-10x+1}{x^{2}+x+10}:\\ \\text{no HA}",
+  note:'Comes from dividing every term by the denominator\u2019s highest power.'},
+ {n:'Exponential ends',f:"e^{x}\\to0\\ (x\\to-\\infty)\\qquad e^{x}\\to+\\infty\\ (x\\to+\\infty)",
+  e:"\\frac{2e^{x}+4}{1-e^{x}}:\\ y=4\\ \\text{and}\\ y=-2",
+  note:'The two ends differ, so always check both directions separately.'},
+ {n:'Dividing by the fastest term',f:"\\cdot\\frac{e^{-kx}}{e^{-kx}}\\ \\text{where }e^{kx}\\text{ grows fastest}",
+  e:"\\frac{10-13e^{x}}{9+8e^{2x}}\\to0\\ \\text{as}\\ x\\to+\\infty",
+  note:'Same trick as dividing by $x^n$ for rational functions.'},
+ {n:'Logarithm',f:"\\ln x\\to-\\infty\\ (x\\to0^{+}),\\quad\\to+\\infty\\ (x\\to+\\infty)",
+  e:"g(x)=\\ln x:\\ \\text{VA at }x=0,\\ \\text{no HA}",
+  note:'Grows without bound, just slowly. No horizontal asymptote.'}
+]},
+{g:'Shape of a graph',items:[
+ {n:'Critical number',f:"c\\in\\text{dom}(f)\\ \\text{and}\\ \\big(f'(c)=0\\ \\text{or}\\ f'(c)\\text{ undefined}\\big)",
+  e:"x^{2}+\\tfrac{54}{x}:\\ x=3\\ \\text{only}\\ (x=0\\ \\text{not in domain})",
+  note:'The domain clause is tested directly. Excluded values still split your intervals.'},
+ {n:'First derivative test',f:"+\\to-\\ \\text{max};\\quad-\\to+\\ \\text{min};\\quad\\text{no change}\\ \\text{neither}",
+  e:"x^{6}e^{-4x}:\\ \\min\\text{ at }0,\\ \\max\\text{ at }\\tfrac32",
+  note:'Factor $f\'$ completely first — the sign chart then reads straight off the factors.'},
+ {n:'Concavity',f:"f''>0\\ \\text{up}\\qquad f''<0\\ \\text{down}",
+  e:"\\ln(x^{2}+8):\\ \\text{CU on}\\ \\left(-2\\sqrt2,2\\sqrt2\\right)",
+  note:'Concave up holds water; concave down spills it.'},
+ {n:'Inflection point',f:"f''\\ \\text{changes sign, and }c\\in\\text{dom}(f)",
+  e:"x^{5}-20x^{4}:\\ \\text{only }x=12\\ (\\text{not }x=0)",
+  note:'$f\'\'(c)=0$ alone is not enough. $x^4$ at 0 is the standard counterexample.'},
+ {n:'Second derivative test',f:"f''(c)>0\\ \\min;\\quad f''(c)<0\\ \\max;\\quad=0\\ \\text{inconclusive}",
+  e:"x^{2}e^{-x}:\\ f''(0)=2>0\\ \\min,\\ f''(2)<0\\ \\max",
+  note:'When it returns 0 it tells you nothing — go back to the first derivative test.'}
+]},
+{g:'Reading a graph of f-prime',items:[
+ {n:'Height tells you about f',f:"f'>0\\Rightarrow f\\ \\uparrow\\qquad f'<0\\Rightarrow f\\ \\downarrow",
+  e:"\\text{Curve above the axis on }(-2,1)\\Rightarrow f\\ \\text{increasing there}",
+  note:'Above the axis, below the axis. Nothing to do with which way the curve tilts.'},
+ {n:'Crossings are extrema of f',f:"-\\to+\\ \\min\\qquad+\\to-\\ \\max",
+  e:"\\text{Crosses upward at }x=-2\\Rightarrow\\text{relative min of }f",
+  note:'Touching the axis without crossing gives a critical number and no extremum.'},
+ {n:'Slope tells you about concavity',f:"f'\\ \\uparrow\\Rightarrow f\\ \\text{concave up}",
+  e:"\\text{A peak of the drawn curve}\\Rightarrow\\text{inflection point of }f",
+  note:'THE TRAP: falling but above the axis means $f$ is still increasing, just slowing.'}
+]},
+{g:'Algebra and trig you need without a calculator',items:[
+ {n:'Exponent rules',f:"a^{m}a^{n}=a^{m+n}\\quad(a^{m})^{n}=a^{mn}\\quad a^{-n}=\\frac1{a^{n}}",
+  e:"32^{4/5}=\\left(\\sqrt[5]{32}\\right)^{4}=2^{4}=16",
+  note:'Fractional powers: take the root first, then the power. Keeps numbers small.'},
+ {n:'Log rules',f:"\\ln(ab)=\\ln a+\\ln b\\quad\\ln\\frac ab=\\ln a-\\ln b\\quad\\ln a^{n}=n\\ln a",
+  e:"\\ln\\left(e^{-1/6}\\right)^{6}=6\\cdot\\left(-\\tfrac16\\right)=-1",
+  note:'$\\ln e=1$, $\\ln1=0$, and $e^{\\ln x}=x$.'},
+ {n:'Difference of squares',f:"(a-b)(a+b)=a^{2}-b^{2}",
+  e:"\\left(\\sqrt{37+4x}-7\\right)\\left(\\sqrt{37+4x}+7\\right)=4x-12",
+  note:'The engine behind every conjugate step.'},
+ {n:'Exact trig values',f:"\\cos\\pi=-1,\\ \\cos2\\pi=1,\\ \\cos3\\pi=-1,\\ \\sin\\tfrac\\pi2=1",
+  e:"A\\cos(3\\pi x)\\ \\text{at}\\ x=1\\ \\Rightarrow\\ -A",
+  note:'Count half-turns. Everything is in radians on this exam.'},
+ {n:'Signs that cannot change',f:"e^{kx}>0\\quad x^{2}\\ge0\\quad(\\text{anything})^{2}\\ge0",
+  e:"e^{-4x}x^{5}(6-4x):\\ \\text{only}\\ x^{5}(6-4x)\\ \\text{matters}",
+  note:'Even powers and exponentials never flip a sign chart — ignore them in sign work.'}
+]}
+];
+
+var EXAMDAY=[
+ {h:'Before you write anything',items:[
+  'Read what is actually being asked: a location $x=c$, a value $f(c)$, an interval, or a sentence.',
+  '"Do not simplify" means stop early. "Simplify" means factor and combine.',
+  'Scan the whole exam and start where you are fastest. 80 minutes for 100 points is about 45 seconds per point.']},
+ {h:'Before you move on from a problem',items:[
+  'Did I state the domain? Half the lost points in Lectures 8\u201310 start here.',
+  'Did I multiply by the inside\u2019s derivative?',
+  'Does the interpretation sentence have units and mention the context?',
+  'Is the answer exact rather than a decimal?']},
+ {h:'If you get stuck',items:[
+  'Write the rule you are using before you use it \u2014 "quotient rule", "first derivative test". A grader can see you knew the method even if the algebra breaks.',
+  'If a limit gives $0/0$, say so on the page, then do algebra. That sentence alone earns credit.',
+  'A labeled wrong answer usually earns most of the points. A blank page earns none.']}
+];
+
+var ST={solved:{},tried:{}};
+var DB=null,UID=null,SAMPLE=null,CANWRITE=null,CUR='formulas';
+var LS='m135tutor-v1';
+
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function norm(s){
+  return String(s||'').toLowerCase().replace(/\s+/g,'').replace(/[{}\[\]]/g,'').replace(/\\/g,'')
+    .replace(/^(y=|f'\(x\)=|dy\/dx=|x=|answer:)/,'')
+    .replace(/\u221a/g,'sqrt').replace(/\u222a/g,'and').replace(/\u00b1/g,'+-')
+    .replace(/[\u2212\u2013\u2014]/g,'-').replace(/\*/g,'').replace(/cdot/g,'')
+    .replace(/infty/g,'inf').replace(/\u221e/g,'inf').replace(/,$/,'');
+}
+function matches(val,accept){
+  var v=norm(val); if(!v)return false;
+  for(var i=0;i<accept.length;i++)if(v===norm(accept[i]))return true;
+  return false;
+}
+function total(){var n=0;TOPICS.forEach(function(t){n+=t.qs.length});return n;}
+function solvedIn(t){var n=0;t.qs.forEach(function(q,i){if(ST.solved[t.id+'q'+(i+1)])n++;});return n;}
+function typeset(el){if(window.MathJax&&window.MathJax.typesetPromise)window.MathJax.typesetPromise([el]).catch(function(){});}
+
+/* ---------- navigation ---------- */
+function buildNav(){
+  var ref=document.getElementById('nav-ref'),tp=document.getElementById('nav-topics'),en=document.getElementById('nav-end');
+  ref.innerHTML='';tp.innerHTML='';en.innerHTML='';
+  ref.appendChild(navBtn('formulas','\u2211','Formula sheet',''));
+  TOPICS.forEach(function(t){tp.appendChild(navBtn(t.id,t.n,t.name.replace(/&amp;/g,'&'),'p-'+t.id));});
+  en.appendChild(navBtn('examday','\u2713','Exam day',''));
+}
+function navBtn(id,n,label,pid){
+  var b=document.createElement('button');
+  b.className='nv';b.dataset.view=id;
+  b.innerHTML='<span class="nn">'+n+'</span><span class="nt">'+label+'</span>'+(pid?'<span class="np" id="'+pid+'"></span>':'');
+  b.addEventListener('click',function(){go(id);});
+  return b;
+}
+function go(id){
+  CUR=id;
+  document.querySelectorAll('.view').forEach(function(v){v.hidden=(v.dataset.view!==id);});
+  document.querySelectorAll('.nv').forEach(function(b){b.classList.toggle('cur',b.dataset.view===id);});
+  try{history.replaceState(null,'','#'+id);}catch(e){}
+  window.scrollTo({top:0,behavior:'auto'});
+  showPad(false);ACTIVE=null;
+}
+
+/* ---------- rendering ---------- */
+function render(){
+  var pane=document.getElementById('pane');
+  pane.innerHTML=viewFormulas()+TOPICS.map(viewTopic).join('')+viewExamDay();
+  pane.addEventListener('click',onClick);
+  pane.addEventListener('keydown',function(e){
+    if(e.key==='Enter'&&e.target.id&&e.target.id.indexOf('in-')===0){e.preventDefault();doCheck(e.target.id.slice(3));}
+  });
+  pane.querySelectorAll('[data-goto]').forEach(function(b){b.addEventListener('click',function(){go(b.dataset.goto);});});
+  typeset(pane);
+}
+
+function viewFormulas(){
+  var h='<section class="view" data-view="formulas"><div class="vhead">'+
+    '<div class="vkicker"><span class="tag">reference</span><span class="tag">keep this open</span></div>'+
+    '<h2>Formula sheet</h2>'+
+    '<p class="lede">Every formula on the exam, each one next to a worked example from your own manual. '+
+    'If a line here is not instant on exam night, that is the highest-value thing you can fix.</p></div>';
+  FORMULAS.forEach(function(gr){
+    h+='<div class="fgroup"><h3>'+gr.g+'</h3>';
+    gr.items.forEach(function(it){
+      h+='<div class="frow"><div class="fmain"><div class="fn">'+it.n+'</div>'+
+         '<div class="fx">$$'+it.f+'$$</div>'+
+         (it.note?'<div class="fnote">'+it.note+'</div>':'')+'</div>'+
+         '<div class="fex"><div class="fexl">example</div><div class="fx">$$'+it.e+'$$</div></div></div>';
+    });
+    h+='</div>';
+  });
+  h+='<div class="vnav"><span></span><button class="btn primary" data-goto="t1">Start topic 1 &rarr;</button></div></section>';
+  return h;
+}
+
+function viewTopic(t,idx){
+  var h='<section class="view" data-view="'+t.id+'" hidden><div class="vhead">'+
+    '<div class="vkicker"><span class="tag">lecture '+t.n+'</span><span class="tag">'+t.sec+'</span><span class="tag">ex '+t.ex+'</span></div>'+
+    '<h2>'+t.name+'</h2><p class="lede">'+t.lede+'</p></div>';
+  h+='<div class="block"><div class="blabel">Lesson</div><div class="lesson">'+t.lesson+'</div></div>';
+  h+='<div class="block"><div class="blabel">Practice &mdash; easy to exam level, ending with a word problem</div>';
+  t.qs.forEach(function(q,i){
+    var qid=t.id+'q'+(i+1);
+    h+='<div class="qcard" id="card-'+qid+'">'+
+      '<div class="qhead"><span class="qnum">'+t.n+'.'+(i+1)+'</span><div class="qtext"><p>'+q.q+'</p></div><span class="qlvl">'+q.lvl+'</span></div>'+
+      '<div class="ansrow"><input type="text" id="in-'+qid+'" placeholder="your answer" autocomplete="off" spellcheck="false">'+
+      '<button class="btn primary" data-check="'+qid+'">Check</button>'+
+      '<button class="btn" data-sol="'+qid+'">Solution</button></div>'+
+      '<div class="preview hidden" id="p-'+qid+'"></div>'+
+      '<div id="v-'+qid+'"></div><div id="s-'+qid+'"></div><div id="d-'+qid+'"></div></div>';
+  });
+  h+='</div>';
+  var prev=idx===0?'formulas':TOPICS[idx-1].id;
+  var next=idx===TOPICS.length-1?'examday':TOPICS[idx+1].id;
+  var prevL=idx===0?'Formula sheet':('Lecture '+TOPICS[idx-1].n);
+  var nextL=idx===TOPICS.length-1?'Exam day':('Lecture '+TOPICS[idx+1].n);
+  h+='<div class="vnav"><button class="btn" data-goto="'+prev+'">&larr; '+prevL+'</button>'+
+     '<button class="btn primary" data-goto="'+next+'">'+nextL+' &rarr;</button></div></section>';
+  return h;
+}
+
+function viewExamDay(){
+  var h='<section class="view" data-view="examday" hidden><div class="vhead">'+
+    '<div class="vkicker"><span class="tag">Tue Oct 13</span><span class="tag">9:30 PM</span><span class="tag">80 minutes</span></div>'+
+    '<h2>Exam day</h2><p class="lede">A plan for the last few days, then the checklist to re-read an hour before you sit down.</p></div>';
+  h+='<div class="block"><div class="blabel">The run-up</div><div class="lesson">'+
+    '<p><b>Sunday.</b> Lectures 1\u20137. Finish every practice problem in those topics. Anything you miss, redo from scratch the next morning rather than re-reading the solution.</p>'+
+    '<p><b>Monday.</b> Lectures 8\u201310 \u2014 the newest and heaviest material, and where the most points sit. Memorize the f-prime translator in the formula sheet.</p>'+
+    '<p><b>Tuesday morning.</b> Reset your progress and run all 40 problems again, closed book, timed. Only redo what you miss.</p>'+
+    '<p><b>Tuesday 6:00 PM.</b> One last pass over the formula sheet. <b>8:30 PM \u2014 stop.</b> Re-read only the trap boxes. Eat something.</p>'+
+    '<div class="trapline"><b>Why redo rather than re-read.</b> Pulling a rule out of memory from a blank page is what makes it stick under pressure. '+
+    'Re-reading a solution feels productive and mostly is not \u2014 if a problem feels easy the second time, that is recognition, not recall.</div></div></div>';
+  EXAMDAY.forEach(function(s){
+    h+='<div class="block"><div class="blabel">'+s.h+'</div><div class="lesson">';
+    s.items.forEach(function(x,i){h+='<label class="chk"><input type="checkbox" id="ed-'+esc(s.h).replace(/\W/g,'')+i+'"><span>'+x+'</span></label>';});
+    h+='</div></div>';
+  });
+  h+='<div class="callout"><strong>No calculator, no scratch paper beyond the two attached pages.</strong> Every number on this exam is built to come out clean. '+
+     'If you are staring at an ugly decimal, back up \u2014 you made an arithmetic slip. Leave answers as $e^{3}$, $\\tfrac{729}{64}e^{-6}$, $\\ln 2$.</div>';
+  h+='<div class="vnav"><button class="btn" data-goto="t10">&larr; Lecture 10</button>'+
+     '<button class="btn" data-goto="formulas">Formula sheet &rarr;</button></div></section>';
+  return h;
+}
+
+/* ---------- practice logic ---------- */
+function qByID(qid){
+  var t=TOPICS.filter(function(x){return qid.indexOf(x.id+'q')===0})[0];
+  if(!t)return null;
+  return {t:t,q:t.qs[parseInt(qid.split('q')[1],10)-1],qid:qid};
+}
+function onClick(e){
+  var b=e.target.closest('button'); if(!b)return;
+  if(b.dataset.check)doCheck(b.dataset.check);
+  else if(b.dataset.sol)showSol(b.dataset.sol,true);
+  else if(b.dataset.diag)doDiag(b.dataset.diag);
+}
+function doCheck(qid){
+  var r=qByID(qid); if(!r)return;
+  var val=document.getElementById('in-'+qid).value;
+  var v=document.getElementById('v-'+qid);
+  if(!val.trim()){v.innerHTML='<div class="verdict no">Type an answer first.</div>';return;}
+  ST.tried[qid]=true;
+  if(matches(val,r.q.accept)){
+    ST.solved[qid]=true;
+    document.getElementById('card-'+qid).classList.add('right');
+    v.innerHTML='<div class="verdict yes"><b>Correct.</b> '+r.q.ans+'</div>';
+  }else{
+    v.innerHTML='<div class="verdict no"><b>That doesn\u2019t match.</b> The answer is '+r.q.ans+'. '+
+      'If you wrote it another way it may still be right \u2014 check the solution, or ask for a diagnosis.</div>'+
+      '<div class="ansrow"><button class="btn" data-diag="'+qid+'">Where did I go wrong?</button></div>';
+  }
+  showSol(qid,false);
+  typeset(document.getElementById('card-'+qid));
+  save();paint();
+}
+function showSol(qid,manual){
+  var r=qByID(qid); if(!r)return;
+  var el=document.getElementById('s-'+qid);
+  if(el.innerHTML)return;
+  el.innerHTML='<div class="sol">'+r.q.sol+'</div>';
+  typeset(el);
+  if(manual){ST.tried[qid]=true;save();}
+}
+function doDiag(qid){
+  var r=qByID(qid); if(!r)return;
+  var box=document.getElementById('d-'+qid);
+  if(!SAMPLE){box.innerHTML='<div class="diag">Diagnosis needs Claude, which isn\u2019t available in this view. The worked solution above shows every step.</div>';return;}
+  var mine=document.getElementById('in-'+qid).value;
+  var btn=document.querySelector('[data-diag="'+qid+'"]'); if(btn)btn.disabled=true;
+  box.innerHTML='<div class="diag wait">Looking at your work\u2026</div>';
+  var prompt='You are tutoring a student in Math 135, Calculus I for the Life and Social Sciences, at Rutgers. '+
+    'They answered a practice problem incorrectly. Identify the single most likely mistake and explain it in 2-4 short sentences. '+
+    'Be specific; name the step where it went wrong. Do not re-teach the whole problem and do not be effusive. Use LaTeX with $ delimiters.\n\n'+
+    'PROBLEM: '+r.q.q.replace(/<[^>]+>/g,'')+'\nCORRECT ANSWER: '+r.q.ans.replace(/<[^>]+>/g,'')+'\nSTUDENT ANSWER: '+mine+'\n\n'+
+    'If the student answer is actually an equivalent correct form, say so plainly in one sentence instead.';
+  SAMPLE(prompt,{modelTier:'default',onText:function(u){box.innerHTML='<div class="diag">'+esc(u.text)+'</div>';}})
+    .then(function(res){box.innerHTML='<div class="diag">'+esc(res.text)+'</div>';typeset(box);})
+    .catch(function(e){
+      var m='Couldn\u2019t get a diagnosis.';
+      if(e&&e.code==='not_granted')m='Claude access wasn\u2019t allowed for this page, so diagnoses are off. The worked solution above still shows every step.';
+      else if(e&&e.code==='rate_limited')m='Too many requests just now \u2014 wait a minute and try again.';
+      box.innerHTML='<div class="diag">'+esc(m)+'</div>';
+    })
+    .then(function(){if(btn)btn.disabled=false;});
+}
+function paint(){
+  var n=0;for(var k in ST.solved)if(ST.solved[k])n++;
+  var tot=total();
+  document.getElementById('scorenum').textContent=n+' / '+tot;
+  document.getElementById('meterfill').style.width=(tot?(n/tot*100):0)+'%';
+  TOPICS.forEach(function(t){
+    var s=solvedIn(t),el=document.getElementById('p-'+t.id);
+    if(el){el.textContent=s+'/'+t.qs.length;el.classList.toggle('done',s===t.qs.length);}
+    t.qs.forEach(function(q,i){
+      var qid=t.id+'q'+(i+1),c=document.getElementById('card-'+qid);
+      if(c&&ST.solved[qid])c.classList.add('right');
+    });
+  });
+}
+function save(){
+  try{localStorage.setItem(LS,JSON.stringify(ST));}catch(e){}
+  if(DB&&UID&&CANWRITE!==false){
+    DB.doc('data/users/'+UID+'/progress').set({solved:ST.solved,tried:ST.tried,at:Date.now()})
+      .catch(function(e){if(e&&e.code==='invalid_argument')CANWRITE=false;});
+  }
+}
+function loadLocal(){
+  try{var r=localStorage.getItem(LS);if(r){var o=JSON.parse(r);ST.solved=o.solved||{};ST.tried=o.tried||{};}}catch(e){}
+}
+document.getElementById('resetbtn').addEventListener('click',function(){
+  ST={solved:{},tried:{}};save();
+  document.querySelectorAll('.qcard').forEach(function(c){c.classList.remove('right')});
+  document.querySelectorAll('[id^="v-"],[id^="s-"],[id^="d-"]').forEach(function(e){e.innerHTML=''});
+  document.querySelectorAll('[id^="p-t"]').forEach(function(e){if(e.classList.contains('preview')){e.innerHTML='';e.classList.add('hidden');}});
+  document.querySelectorAll('[id^="in-"]').forEach(function(e){e.value=''});
+  paint();
+});
+
+/* ---------- ask panel ---------- */
+var TURNS=[],ASKCTL=null;
+var RULES='You are a calculus tutor helping a student in Math 135, Calculus I for the Life and Social Sciences, at Rutgers University. '+
+ 'Their Exam 2 covers exactly these ten topics and nothing beyond them: (1) the limit definition of the derivative and average vs instantaneous rate of change; '+
+ '(2) limits of indeterminate form, solved by factoring, common denominators, or conjugates; (3) basic derivative rules plus the product and quotient rules; '+
+ '(4) the chain rule; (5) tangent lines and linear approximation; (6) continuity, piecewise constants, and continuity vs differentiability; '+
+ '(7) infinite limits, limits at infinity, vertical and horizontal asymptotes; (8) critical numbers, intervals of increase and decrease, relative extrema; '+
+ '(9) concavity, inflection points, the second derivative test; (10) curve analysis, especially reading a graph of f-prime to draw conclusions about f. '+
+ 'The exam is 80 minutes with NO CALCULATOR, so always leave answers exact (e^3, 729/64 e^-6, ln 2) and never give a decimal where an exact form exists. '+
+ 'Answer concisely: lead with the answer or the key idea, then show the steps compactly. Use LaTeX with $ for inline math and $$ for display math. '+
+ 'Do not pad with encouragement or restate the question. If a question falls outside these ten topics, say so briefly and answer anyway if it is short. '+
+ 'Antiderivatives, integration, related rates, applied optimization and absolute extrema are NOT on this exam; mention that if asked about them.';
+function addBub(cls,txt){
+  var log=document.getElementById('asklog');
+  var d=document.createElement('div');d.className='bub '+cls;d.textContent=txt;
+  log.appendChild(d);log.scrollTop=log.scrollHeight;return d;
+}
+document.getElementById('askopen').addEventListener('click',function(){
+  document.getElementById('askpanel').classList.remove('hidden');
+  document.getElementById('askdock').classList.add('hidden');
+  showPad(false);
+  document.getElementById('askbox').focus();
+});
+document.getElementById('askclose').addEventListener('click',function(){
+  document.getElementById('askpanel').classList.add('hidden');
+  document.getElementById('askdock').classList.remove('hidden');
+});
+document.getElementById('askbox').addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAsk();}
+});
+document.getElementById('asksend').addEventListener('click',sendAsk);
+function sendAsk(){
+  var box=document.getElementById('askbox'),msg=box.value.trim();
+  if(!msg)return;
+  if(!SAMPLE){addBub('cl','Claude isn\u2019t available in this view, so the ask box is off. Everything else on the page works.');return;}
+  box.value='';addBub('me',msg);
+  TURNS.push({role:'user',content:msg});
+  var bub=addBub('cl wait','Thinking\u2026');
+  ASKCTL=new AbortController();
+  SAMPLE([{role:'user',content:RULES}].concat(TURNS.slice(-12)),
+    {cache:false,signal:ASKCTL.signal,modelTier:'default',
+     onText:function(u){bub.className='bub cl';bub.textContent=u.text;
+       document.getElementById('asklog').scrollTop=document.getElementById('asklog').scrollHeight;}})
+  .then(function(res){
+    bub.className='bub cl';bub.textContent=res.text;TURNS.push({role:'assistant',content:res.text});
+    typeset(bub);document.getElementById('asklog').scrollTop=document.getElementById('asklog').scrollHeight;
+  })
+  .catch(function(e){
+    bub.className='bub cl';
+    var m='Something went wrong. Try again.';
+    if(e&&e.code==='not_granted'){m='You didn\u2019t allow this page to use Claude, so the ask box is off for this visit.';SAMPLE=null;}
+    else if(e&&e.code==='rate_limited')m='Too many questions at once. Give it a minute.';
+    else if(e&&e.code==='cancelled')m='Stopped.';
+    bub.textContent=m;
+  });
+}
+
+/* ---- plain text to LaTeX, for the live preview ---- */
+var TEXFN={sin:'\\sin',cos:'\\cos',tan:'\\tan',sec:'\\sec',csc:'\\csc',cot:'\\cot',ln:'\\ln',log:'\\log',exp:'\\exp',arcsin:'\\arcsin',arccos:'\\arccos',arctan:'\\arctan'};
+
+function texExpr(src){
+  var s=String(src||'').replace(/\s+/g,''),p=0;
+  function expr(){
+    var v=term();
+    while(p<s.length&&(s[p]==='+'||s[p]==='-')){var o=s[p++];v+=o+term();}
+    return v;
+  }
+  function term(){
+    var v=unary();
+    for(;;){
+      if(p>=s.length)break;
+      var c=s[p];
+      if(c==='*'){p++;v+='\\cdot '+unary();continue;}
+      if(c==='/'){p++;v='\\frac{'+unwrap(v)+'}{'+unwrap(unary())+'}';continue;}
+      if(/[A-Za-z0-9(.|]/.test(c)){v+=unary();continue;}
+      break;
+    }
+    return v;
+  }
+  function unary(){
+    if(s[p]==='-'){p++;return '-'+unary();}
+    if(s[p]==='+'){p++;return unary();}
+    return power();
+  }
+  function unwrap(t){
+    if(t.slice(0,6)!=='\\left('||t.slice(-7)!=='\\right)')return t;
+    var inner=t.slice(6,-7),d=0;
+    for(var i=0;i<inner.length;i++){
+      if(inner.substr(i,6)==='\\left(')d++;
+      else if(inner.substr(i,7)==='\\right)'){d--;if(d<0)return t;}
+    }
+    return d===0?inner:t;
+  }
+  function power(){
+    var b=atom();
+    if(s[p]==='^'){p++;return b+'^{'+unwrap(unary())+'}';}
+    if(s[p]==='_'){p++;return b+'_{'+unwrap(unary())+'}';}
+    return b;
+  }
+  function grp(open,close,L,R){
+    p++;var parts=[expr()];
+    while(s[p]===','){p++;parts.push(expr());}
+    if(s[p]===close)p++;
+    return L+parts.join(',\\,')+R;
+  }
+  function atom(){
+    if(p>=s.length)return '';
+    var c=s[p];
+    if(c==='(')return grp('(',')','\\left(','\\right)');
+    if(c==='[')return grp('[',']','\\left[','\\right]');
+    if(c==='|'){p++;var a=expr();if(s[p]==='|')p++;return '\\left|'+a+'\\right|';}
+    if(/[0-9.]/.test(c)){var st=p;while(p<s.length&&/[0-9.]/.test(s[p]))p++;return s.slice(st,p);}
+    if(/[A-Za-z]/.test(c)){
+      var st2=p;while(p<s.length&&/[A-Za-z]/.test(s[p]))p++;
+      var n=s.slice(st2,p),k=n.toLowerCase();
+      if(k==='sqrt'&&s[p]==='('){p++;var q=expr();if(s[p]===')')p++;return '\\sqrt{'+q+'}';}
+      if(k==='cbrt'&&s[p]==='('){p++;var q2=expr();if(s[p]===')')p++;return '\\sqrt[3]{'+q2+'}';}
+      if(k==='abs'&&s[p]==='('){p++;var q3=expr();if(s[p]===')')p++;return '\\left|'+q3+'\\right|';}
+      if(TEXFN[k]&&s[p]==='('){p++;var q4=expr();if(s[p]===')')p++;return TEXFN[k]+'\\left('+q4+'\\right)';}
+      if(TEXFN[k])return TEXFN[k]+' ';
+      if(k==='pi')return '\\pi ';
+      if(k==='inf'||k==='infty'||k==='infinity')return '\\infty ';
+      if(k==='theta')return '\\theta ';
+      if(k==='dne')return '\\text{DNE}';
+      if(n.length>1)return '\\mathrm{'+n+'}';
+      return n;
+    }
+    p++;return '';
+  }
+  var out=expr();
+  if(p<s.length)out+=s.slice(p);
+  return out;
+}
+
+function toTeX(src){
+  var s=String(src||'');
+  if(!s.trim())return '';
+  if(/^[A-Za-z][A-Za-z\s]*$/.test(s.trim()))return '\\text{'+s.trim()+'}';
+  s=s.replace(/√/g,'sqrt').replace(/∞/g,'inf').replace(/π/g,'pi')
+     .replace(/[−–—]/g,'-').replace(/∪/g,' U ')
+     .replace(/≤/g,'<=').replace(/≥/g,'>=').replace(/≠/g,'!=').replace(/±/g,'+-');
+  var out='',buf='',i=0,d=0;
+  function flush(){if(buf.trim())out+=texExpr(buf);buf='';}
+  while(i<s.length){
+    var c=s[i],two=s.substr(i,2);
+    if(c==='('||c==='[')d++;
+    if(c===')'||c===']')d--;
+    if(d<=0&&(two==='<='||two==='>='||two==='!=')){flush();out+=two==='<='?'\\le ':two==='>='?'\\ge ':'\\neq ';i+=2;continue;}
+    if(d<=0&&two==='+-'){flush();out+='\\pm ';i+=2;continue;}
+    if(d<=0&&(c==='='||c==='<'||c==='>')){flush();out+=c;i++;continue;}
+    if(d<=0&&c===','){flush();out+=',\\;';i++;continue;}
+    if(d<=0&&(c==='U'||c==='u')&&!/[A-Za-z]/.test(s[i-1]||'')&&!/[A-Za-z]/.test(s[i+1]||'')){flush();out+='\\cup ';i++;continue;}
+    buf+=c;i++;
+  }
+  flush();
+  return out;
+}
+
+/* ---- math keyboard ---- */
+var ACTIVE=null,PVT=null;
+var KEYS1=[['x','x'],['x²','^2'],['xⁿ','^()',1],['√','sqrt()',1],['∛','cbrt()',1],
+  ['a/b','/'],['( )','()',1],['|a|','abs()',1],['π','pi'],['e','e'],['∞','inf'],['−∞','-inf']];
+var KEYS2=[['ln','ln()',1],['eˣ','e^()',1],['sin','sin()',1],['cos','cos()',1],['tan','tan()',1],['sec','sec()',1],
+  ['≤','<='],['≥','>='],['≠','!='],['±','+-'],['∪',' U '],['⌫','DEL']];
+
+function buildPad(){
+  [['padr1',KEYS1],['padr2',KEYS2]].forEach(function(pair){
+    var host=document.getElementById(pair[0]);host.innerHTML='';
+    pair[1].forEach(function(k){
+      var b=document.createElement('button');
+      b.className='k'+(k[0].length>2?' wide':'');b.textContent=k[0];b.type='button';
+      b.addEventListener('mousedown',function(e){e.preventDefault();});
+      b.addEventListener('click',function(){k[1]==='DEL'?del():ins(k[1],k[2]||0);});
+      host.appendChild(b);
+    });
+  });
+}
+function ins(txt,back){
+  var el=ACTIVE;if(!el)return;
+  var a=el.selectionStart,b=el.selectionEnd,v=el.value;
+  el.value=v.slice(0,a)+txt+v.slice(b);
+  var pos=a+txt.length-back;
+  el.focus();el.setSelectionRange(pos,pos);
+  preview(el);
+}
+function del(){
+  var el=ACTIVE;if(!el)return;
+  var a=el.selectionStart,b=el.selectionEnd,v=el.value;
+  if(a===b&&a>0){el.value=v.slice(0,a-1)+v.slice(a);el.focus();el.setSelectionRange(a-1,a-1);}
+  else if(a!==b){el.value=v.slice(0,a)+v.slice(b);el.focus();el.setSelectionRange(a,a);}
+  preview(el);
+}
+function preview(el){
+  if(!el.id||el.id.indexOf('in-')!==0)return;
+  var box=document.getElementById('p-'+el.id.slice(3));
+  if(!box)return;
+  clearTimeout(PVT);
+  PVT=setTimeout(function(){
+    var t=toTeX(el.value);
+    if(!t){box.classList.add('hidden');box.innerHTML='';return;}
+    box.classList.remove('hidden');
+    box.innerHTML='<span class="plab">shows as</span>\\('+t+'\\)';
+    typeset(box);
+  },180);
+}
+function showPad(on){
+  document.getElementById('mathpad').classList.toggle('hidden',!on);
+  document.getElementById('askdock').classList.toggle('hidden',on);
+}
+document.addEventListener('focusin',function(e){
+  if(e.target.id&&e.target.id.indexOf('in-')===0){
+    ACTIVE=e.target;
+    var r=qByID(e.target.id.slice(3));
+    document.getElementById('padfor').textContent=r?('Answering '+r.t.n+'.'+(e.target.id.split('q')[1])):'Math keyboard';
+    showPad(true);
+  }
+});
+document.addEventListener('input',function(e){
+  if(e.target.id&&e.target.id.indexOf('in-')===0)preview(e.target);
+});
+document.getElementById('padhide').addEventListener('click',function(){showPad(false);ACTIVE=null;});
+
+/* ---- grapher ---- */
+var MFN={sin:Math.sin,cos:Math.cos,tan:Math.tan,ln:Math.log,sqrt:Math.sqrt,abs:Math.abs,exp:Math.exp,
+  asin:Math.asin,acos:Math.acos,atan:Math.atan,
+  log:function(v){return Math.log(v)/Math.LN10;},
+  sec:function(v){return 1/Math.cos(v);},csc:function(v){return 1/Math.sin(v);},cot:function(v){return 1/Math.tan(v);},
+  cbrt:function(v){return v<0?-Math.pow(-v,1/3):Math.pow(v,1/3);}};
+
+function compile(src){
+  var s=String(src||'').toLowerCase().replace(/\s+/g,'')
+    .replace(/√/g,'sqrt').replace(/π/g,'pi').replace(/[−–—]/g,'-');
+  var p=0;
+  function fail(m){throw new Error(m||'Check the expression');}
+  function expr(){
+    var v=term();
+    while(p<s.length&&(s[p]==='+'||s[p]==='-')){
+      var o=s[p++],r=term();
+      v=(function(a,b,o){return o==='+'?function(x){return a(x)+b(x);}:function(x){return a(x)-b(x);};})(v,r,o);
+    }
+    return v;
+  }
+  function term(){
+    var v=unary();
+    for(;;){
+      if(p>=s.length)break;
+      var c=s[p],r;
+      if(c==='*'){p++;r=unary();v=(function(a,b){return function(x){return a(x)*b(x);};})(v,r);continue;}
+      if(c==='/'){p++;r=unary();v=(function(a,b){return function(x){return a(x)/b(x);};})(v,r);continue;}
+      if(/[a-z0-9(.]/.test(c)){r=unary();v=(function(a,b){return function(x){return a(x)*b(x);};})(v,r);continue;}
+      break;
+    }
+    return v;
+  }
+  function unary(){
+    if(s[p]==='-'){p++;var u=unary();return function(x){return -u(x);};}
+    if(s[p]==='+'){p++;return unary();}
+    return power();
+  }
+  function power(){
+    var b=atom();
+    if(s[p]==='^'){p++;var e=unary();return function(x){return Math.pow(b(x),e(x));};}
+    return b;
+  }
+  function atom(){
+    if(p>=s.length)fail('Expression ends early');
+    var c=s[p];
+    if(c==='('){p++;var e=expr();if(s[p]!==')')fail('Missing )');p++;return e;}
+    if(/[0-9.]/.test(c)){
+      var st=p;while(p<s.length&&/[0-9.]/.test(s[p]))p++;
+      var n=parseFloat(s.slice(st,p));if(!isFinite(n))fail('Bad number');
+      return function(){return n;};
+    }
+    if(/[a-z]/.test(c)){
+      var st2=p;while(p<s.length&&/[a-z]/.test(s[p]))p++;
+      var nm=s.slice(st2,p);
+      if(nm==='x')return function(x){return x;};
+      if(nm==='pi')return function(){return Math.PI;};
+      if(nm==='e'&&s[p]!=='(')return function(){return Math.E;};
+      if(MFN[nm]){
+        if(s[p]!=='(')fail('Put parentheses after '+nm);
+        p++;var a=expr();if(s[p]!==')')fail('Missing ) after '+nm);p++;
+        var f=MFN[nm];return function(x){return f(a(x));};
+      }
+      fail('Don’t recognize "'+nm+'"');
+    }
+    fail('Unexpected "'+c+'"');
+  }
+  var fn=expr();
+  if(p<s.length)fail('Unexpected "'+s[p]+'"');
+  fn(0.37);
+  return fn;
+}
+function dv1(f){return function(x){var h=1e-5*(1+Math.abs(x));return (f(x+h)-f(x-h))/(2*h);};}
+function dv2(f){return function(x){var h=1e-4*(1+Math.abs(x));return (f(x+h)-2*f(x)+f(x-h))/(h*h);};}
+function niceStep(r){
+  if(!(r>0))return 1;
+  var raw=r/8,m=Math.pow(10,Math.floor(Math.log(raw)/Math.LN10)),n=raw/m;
+  return (n<1.5?1:n<3?2:n<7?5:10)*m;
+}
+function fmtN(v,st){
+  if(Math.abs(v)<st*1e-6)return '0';
+  var dp=Math.max(0,Math.min(4,-Math.floor(Math.log(st)/Math.LN10)+(st<1?1:0)));
+  return v.toFixed(dp).replace(/\.0+$/,'').replace(/(\.\d*?)0+$/,'$1');
+}
+var GON={f:true,d1:false,d2:false};
+function drawPlot(){
+  var cv=document.getElementById('plot'),err=document.getElementById('gerr');
+  if(!cv)return;
+  var W=cv.parentElement.clientWidth||600,H=320,dpr=window.devicePixelRatio||1;
+  cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+'px';
+  var g=cv.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,W,H);
+  var cs=getComputedStyle(document.body);
+  var cRule=cs.getPropertyValue('--rule').trim()||'#e0e0e0';
+  var cAx=cs.getPropertyValue('--fg-faint').trim()||'#888';
+  var cTx=cs.getPropertyValue('--fg-dim').trim()||'#666';
+  var f;
+  try{f=compile(document.getElementById('gfn').value);err.textContent='';}
+  catch(e){err.textContent=e.message;return;}
+  var x0=parseFloat(document.getElementById('gxmin').value),x1=parseFloat(document.getElementById('gxmax').value);
+  if(!isFinite(x0)||!isFinite(x1)||x1<=x0){err.textContent='Set x-min below x-max.';return;}
+  var curves=[];
+  if(GON.f)curves.push({fn:f,c:'#2a78d6'});
+  if(GON.d1)curves.push({fn:dv1(f),c:'#eb6834'});
+  if(GON.d2)curves.push({fn:dv2(f),c:'#1baf7a'});
+  if(!curves.length){err.textContent='Turn on at least one curve.';return;}
+  var N=Math.max(320,Math.round(W)),all=[],series=[];
+  curves.forEach(function(cu){
+    var pts=[];
+    for(var i=0;i<=N;i++){
+      var x=x0+(x1-x0)*i/N,y;
+      try{y=cu.fn(x);}catch(e){y=NaN;}
+      if(typeof y!=='number'||!isFinite(y))y=NaN;
+      pts.push([x,y]);
+      if(!isNaN(y))all.push(y);
+    }
+    series.push({pts:pts,c:cu.c});
+  });
+  if(!all.length){err.textContent='Nothing to plot on this interval.';return;}
+  var srt=all.slice().sort(function(a,b){return a-b;});
+  var lo=srt[Math.floor(srt.length*0.02)],hi=srt[Math.floor(srt.length*0.98)];
+  if(lo===hi){lo-=1;hi+=1;}
+  var pad=(hi-lo)*0.12;lo-=pad;hi+=pad;
+  if(lo>0&&lo<(hi-lo)*0.4)lo=0;
+  if(hi<0&&-hi<(hi-lo)*0.4)hi=0;
+  var L=46,R=10,T=12,B=26,PW=W-L-R,PH=H-T-B;
+  function px(x){return L+(x-x0)/(x1-x0)*PW;}
+  function py(y){return T+(hi-y)/(hi-lo)*PH;}
+  var sx=niceStep(x1-x0),sy=niceStep(hi-lo);
+  g.lineWidth=1;g.strokeStyle=cRule;g.fillStyle=cTx;g.font='11px ui-monospace,monospace';
+  g.textAlign='center';g.textBaseline='top';
+  for(var gx=Math.ceil(x0/sx)*sx;gx<=x1+1e-9;gx+=sx){
+    var X=px(gx);g.beginPath();g.moveTo(X,T);g.lineTo(X,T+PH);g.stroke();
+    g.fillText(fmtN(gx,sx),X,T+PH+6);
+  }
+  g.textAlign='right';g.textBaseline='middle';
+  for(var gy=Math.ceil(lo/sy)*sy;gy<=hi+1e-9;gy+=sy){
+    var Y=py(gy);g.beginPath();g.moveTo(L,Y);g.lineTo(L+PW,Y);g.stroke();
+    g.fillText(fmtN(gy,sy),L-7,Y);
+  }
+  g.strokeStyle=cAx;g.lineWidth=1.4;
+  if(lo<0&&hi>0){g.beginPath();g.moveTo(L,py(0));g.lineTo(L+PW,py(0));g.stroke();}
+  if(x0<0&&x1>0){g.beginPath();g.moveTo(px(0),T);g.lineTo(px(0),T+PH);g.stroke();}
+  var jump=(hi-lo)*0.55;
+  series.forEach(function(se){
+    g.strokeStyle=se.c;g.lineWidth=2;g.lineJoin='round';g.lineCap='round';
+    g.beginPath();var pen=false,prev=null;
+    se.pts.forEach(function(pt){
+      var y=pt[1];
+      if(isNaN(y)||y<lo-(hi-lo)*3||y>hi+(hi-lo)*3){pen=false;prev=null;return;}
+      if(prev!==null&&Math.abs(y-prev)>jump){pen=false;}
+      var X=px(pt[0]),Y=py(Math.max(lo-(hi-lo),Math.min(hi+(hi-lo),y)));
+      if(!pen){g.moveTo(X,Y);pen=true;}else{g.lineTo(X,Y);}
+      prev=y;
+    });
+    g.stroke();
+  });
+  g.save();g.beginPath();g.rect(0,0,W,T);g.rect(0,T+PH,W,B);g.clip();g.restore();
+}
+function openGraph(){
+  document.getElementById('graphpanel').classList.remove('hidden');
+  document.getElementById('askdock').classList.add('hidden');
+  showPad(false);
+  setTimeout(drawPlot,30);
+}
+document.getElementById('graphopen').addEventListener('click',openGraph);
+document.getElementById('graphclose').addEventListener('click',function(){
+  document.getElementById('graphpanel').classList.add('hidden');
+  document.getElementById('askdock').classList.remove('hidden');
+});
+document.getElementById('gplot').addEventListener('click',drawPlot);
+['gfn','gxmin','gxmax'].forEach(function(id){
+  document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();drawPlot();}});
+});
+document.querySelectorAll('.tg').forEach(function(b){
+  b.addEventListener('click',function(){
+    GON[b.dataset.fn]=!GON[b.dataset.fn];
+    b.classList.toggle('on',GON[b.dataset.fn]);
+    drawPlot();
+  });
+});
+window.addEventListener('resize',function(){
+  if(!document.getElementById('graphpanel').classList.contains('hidden'))drawPlot();
+});
+if(window.matchMedia){
+  try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){
+    if(!document.getElementById('graphpanel').classList.contains('hidden'))drawPlot();
+  });}catch(e){}
+}
+
+/* ---------- grapher presets ---------- */
+var GPRE=[['x^6*e^(-4x)',-2,4],['x^2/(x-3)',-6,10],['ln(x^2+8)',-8,8],['x^(5/3)-4x^(2/3)',-3,4],['20x*e^(-x/2)',0,14],['80/(1+39e^(-0.5x))',0,20]];
+(function(){
+  var h=document.getElementById('gpre');
+  GPRE.forEach(function(p){
+    var b=document.createElement('button');b.className='gp';b.type='button';b.textContent=p[0];
+    b.addEventListener('click',function(){
+      document.getElementById('gfn').value=p[0];
+      document.getElementById('gxmin').value=p[1];
+      document.getElementById('gxmax').value=p[2];
+      drawPlot();
+    });
+    h.appendChild(b);
+  });
+})();
+
+/* ---------- boot ---------- */
+loadLocal();buildNav();render();buildPad();paint();
+var hash=(location.hash||'').replace('#','');
+go(/^(formulas|examday|t([1-9]|10))$/.test(hash)?hash:'formulas');
+
+claude.use('sample').then(function(s){
+  SAMPLE=s;
+  if(!s){
+    document.getElementById('askopen').classList.add('hidden');
+    document.getElementById('askhint').textContent='Ask box unavailable in this view.';
+  }
+}).catch(function(){});
+
+Promise.all([claude.use('db').catch(function(){return null}),claude.use('user').catch(function(){return null})])
+.then(function(r){
+  var db=r[0],user=r[1];
+  if(!db||!user)return;
+  DB=db;
+  return Promise.all([user.id(),Promise.resolve(user.can&&user.can('data.write')).catch(function(){return null})])
+    .then(function(x){
+      UID=x[0];CANWRITE=x[1];
+      if(!UID)return;
+      if(CANWRITE===false){document.getElementById('who').textContent='Saved on this device (view-only access)';return;}
+      document.getElementById('who').textContent='Saved to your account';
+      return DB.doc('data/users/'+UID+'/progress').get().then(function(snap){
+        if(snap.exists){
+          var d=snap.data()||{},sv=d.solved||{},tr=d.tried||{},k;
+          for(k in sv)ST.solved[k]=sv[k];
+          for(k in tr)ST.tried[k]=tr[k];
+          paint();
+        }
+      });
+    });
+}).catch(function(){});
+</script>
